@@ -2,112 +2,147 @@
 <html lang="ms">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>SlotData — RTP Live Scanner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SQUEEN668 — RTP Live Scanner</title>
+    <meta name="description" content="SQUEEN668 AI-Powered RTP Scanner — Analisis data slot real-time untuk MEGA888, 918KISS, JILI, Pragmatic Play dan lebih.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Ambient Background -->
-    <div class="ambient-bg"></div>
-    <div class="dot-pattern"></div>
+    <!-- Matrix Rain Canvas -->
+    <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
 
-    <div class="container mx-auto">
-        <!-- HERO SECTION -->
-        <header class="hero-section">
-            <div class="hero-icon">
-                <svg viewBox="0 0 24 24" width="40" height="40" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+    <!-- Scan Flash Overlay -->
+    <div id="scanFlash" class="scan-flash"></div>
+
+    <!-- Scanner Header -->
+    <header class="scanner-header">
+        <div class="header-glow"></div>
+        <h1 class="glitch-title" data-text="SQUEEN668_RTP_SCANNER.sys">
+            <span class="glitch-icon">⚡</span>
+            SQUEEN668_RTP_SCANNER.sys
+        </h1>
+        <p class="header-sub">
+            <span class="terminal-prefix">&gt;_</span>
+            <span id="typedText" class="typed-text"></span><span class="blink-cursor">▊</span>
+        </p>
+        <div class="status-bar">
+            <div class="status-item live">
+                <span class="live-dot"></span>LIVE
             </div>
-            <h1 class="hero-title">SlotData</h1>
-            <p class="hero-subtitle">THE RTP SCANNER THAT ACTUALLY WORKS.</p>
-            <p class="hero-desc">Real-time RTP data from 50+ trusted providers. Scan any slot, track patterns, and make informed decisions.</p>
-            
-            <div class="hero-pill">
-                <span class="pill-badge">Live</span>
-                <span class="pill-text">Real-time data from 50+ providers</span>
-                <svg viewBox="0 0 24 24" width="16" height="16" stroke="var(--accent)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            <div class="status-item">
+                <span>🎰</span> <span id="statProviders">16</span> Providers
             </div>
-        </header>
-
-        <!-- SCANNER SECTION -->
-        <section id="scanner" class="scanner-section">
-            <h2 class="section-title">
-                <span class="section-chevron">⟩</span> Start Scanning
-            </h2>
-            
-            <div class="glass-panel scanner-box">
-                <label>Pilih Provider Anda</label>
-                <button id="providerSelectBtn" class="provider-select-btn" onclick="openProviderModal()">
-                    <div style="display:flex; align-items:center; gap: 12px;">
-                        <div class="prov-icon-sm" id="selectedProvIcon">
-                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                        </div>
-                        <span id="selectedProvText">Sila Pilih Provider...</span>
-                    </div>
-                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
-
-                <!-- User ID Input for Restricted Providers -->
-                <div id="userIdContainer" class="user-id-container" style="display:none;">
-                    <div class="input-wrapper" id="inputIdWrapper">
-                        <svg class="input-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        <input type="text" id="userInputId" placeholder="Masukkan User ID..." class="user-id-input" oninput="resetIdError()">
-                    </div>
-                    <p id="idErrorMsg" class="error-msg" style="display:none;">Sila masukkan ID anda terlebih dahulu.</p>
-                </div>
-
-                <!-- Main Scan Button -->
-                <button id="startScanBtn" class="scan-action-btn" onclick="startScan()">
-                    <div class="scan-btn-content">
-                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                        Mula Mengimbas
-                    </div>
-                </button>
-            </div>
-        </section>
-
-        <!-- Scanning Section (Terminal Log) -->
-        <section id="scanningSection" class="scanner-section" style="display:none;">
-            <h2 class="section-title"><span class="section-chevron">⟩</span> Scanning in progress...</h2>
-            <div class="hacker-terminal" id="terminalLog">
-                <!-- Lines injected by JS -->
-            </div>
-        </section>
-
-        <!-- Results Section -->
-        <section id="resultsSection" class="scanner-section" style="display:none;">
-            <h2 class="section-title"><span class="section-chevron">⟩</span> Scan Results</h2>
-            <div id="gameList"></div>
-            
-            <button class="scan-action-btn" onclick="location.reload()" style="margin-top:20px; background:#171717; color:#FFF; border-color:#404040;">
-                Imbas Semula
-            </button>
-        </section>
-        
-        <div style="height:40px;"></div>
-    </div>
-
-    <!-- PROVIDER SELECTION MODAL -->
-    <div id="providerModal" class="modal-overlay" style="display:none;">
-        <div class="modal-backdrop" onclick="closeProviderModal()"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Pilih Provider</h3>
-                <button class="close-btn" onclick="closeProviderModal()">
-                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-            </div>
-            <div class="modal-search">
-                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <input type="text" id="providerSearch" placeholder="Cari provider..." onkeyup="filterProvidersModal()">
-            </div>
-            <div class="modal-body">
-                <div id="modalProviderGrid" class="modal-grid">
-                    <!-- Populated dynamically by JS -->
-                </div>
+            <div class="status-item">
+                <span>⏱️</span> <span id="lastUpdate">--:--</span>
             </div>
         </div>
-    </div>
+    </header>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+        <div class="stat-card hot">
+            <div class="stat-icon">🔥</div>
+            <div class="stat-value" id="statHot">0</div>
+            <div class="stat-label">HOT</div>
+        </div>
+        <div class="stat-card warm">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-value" id="statWarm">0</div>
+            <div class="stat-label">WARM</div>
+        </div>
+        <div class="stat-card cold">
+            <div class="stat-icon">❄️</div>
+            <div class="stat-value" id="statCold">0</div>
+            <div class="stat-label">COLD</div>
+        </div>
+        <div class="stat-card total">
+            <div class="stat-icon">📊</div>
+            <div class="stat-value" id="totalGames">0</div>
+            <div class="stat-label">TOTAL</div>
+        </div>
+    </section>
+
+    <!-- Device Intelligence Panel -->
+    <section id="deviceIntel" class="device-intel"></section>
+
+    <!-- Provider Grid -->
+    <section class="provider-section">
+        <h2 class="section-title">
+            <span class="section-icon">🎮</span>
+            PILIH TARGET
+        </h2>
+        <div id="providerGrid" class="provider-grid">
+            <!-- Populated dynamically by JS from 99laju.net data -->
+        </div>
+    </section>
+
+    <!-- Scanning Section (Terminal Log) -->
+    <section id="scanningSection" class="scanning-section" style="display:none;">
+        <div class="hacker-terminal">
+            <div class="terminal-header">
+                <span class="term-dot red"></span>
+                <span class="term-dot yellow"></span>
+                <span class="term-dot green"></span>
+                <span class="terminal-title" id="termPercent">sq668_scanner.exe — 0%</span>
+            </div>
+            <div class="terminal-progress">
+                <div class="terminal-progress-fill" id="termProgressBar" style="width:0%"></div>
+            </div>
+            <div class="terminal-body" id="terminalLog">
+                <!-- Lines injected by JS -->
+            </div>
+        </div>
+        <p id="scanDetail" class="scan-detail">Scanning...</p>
+    </section>
+
+    <!-- Results Section -->
+    <section id="resultsSection" class="results-section">
+        <!-- Top 3 Podium -->
+        <div id="top3Section" class="top3-section"></div>
+
+        <!-- Filter & Sort -->
+        <div class="controls-bar">
+            <div class="filter-controls">
+                <button class="filter-tab active" data-filter="all">🎮 ALL</button>
+                <button class="filter-tab" data-filter="hot">🔥 HOT</button>
+                <button class="filter-tab" data-filter="warm">⚡ WARM</button>
+                <button class="filter-tab" data-filter="cold">❄️ COLD</button>
+            </div>
+            <select id="sortSelect" class="sort-select">
+                <option value="rtp-desc">RTP ▼ Tertinggi</option>
+                <option value="rtp-asc">RTP ▲ Terendah</option>
+                <option value="name">Nama A-Z</option>
+            </select>
+        </div>
+
+        <!-- Game List -->
+        <div id="gameList" class="game-list"></div>
+
+        <!-- Share Section -->
+        <div class="share-section">
+            <h4 class="share-title">📤 Share Result</h4>
+            <p class="share-desc">Kongsi scan result dengan kawan!</p>
+            <div class="share-buttons">
+                <button class="share-btn share-btn-wa" onclick="shareResults('whatsapp')"><span>💬</span> WhatsApp</button>
+                <button class="share-btn share-btn-tg" onclick="shareResults('telegram')"><span>✈️</span> Telegram</button>
+                <button class="share-btn share-btn-copy" onclick="shareResults('copy')"><span>📋</span> Copy</button>
+            </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="results-footer">
+            <p>⏱️ Data dikemaskini setiap 60 minit • Percentage berubah mengikut masa</p>
+        </div>
+    </section>
+
+    <!-- Floating SCAN Button -->
+    <button class="floating-scan" onclick="startScan()" id="floatingScan">
+        <span class="scan-pulse"></span>
+        <span class="scan-text">▶ SCAN</span>
+    </button>
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav">
@@ -116,12 +151,20 @@
             <span>Scanner</span>
         </a>
         <a href="#" class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>History</span>
+        </a>
+        <a href="#" class="nav-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
             <span>Promo</span>
         </a>
         <a href="#" class="nav-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             <span>LiveChat</span>
+        </a>
+        <a href="#" class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Setting</span>
         </a>
     </nav>
 
