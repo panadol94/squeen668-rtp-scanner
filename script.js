@@ -1201,10 +1201,12 @@ const PROVIDER_ORDER = [
     'netent', 'microgaming', 'pussy888', 'live22'
 ];
 
+const RESTRICTED_PROVIDERS = ['mega888', '918kiss', 'pussy888'];
+
 // ==========================================
 // STATE
 // ==========================================
-let currentProvider = 'pragmatic';
+let currentProvider = ''; // Default to empty
 let currentFilter = 'all';
 let currentGames = [];
 let isScanning = false;
@@ -1213,42 +1215,89 @@ let isScanning = false;
 // INIT
 // ==========================================
 document.addEventListener('DOMContentLoaded', function() {
-    buildProviderGrid();
-    initTypingEffect();
+    buildProviderModalGrid();
     initFilterTabs();
     initSortSelect();
-    initBottomNav();
     initMatrixRain();
-    initDeviceIntel();
-    loadGames(currentProvider);
-    updateTimestamp();
-    setInterval(updateTimestamp, 60000);
-    setInterval(function() { loadGames(currentProvider); }, SCANNER_CONFIG.seedInterval * 60 * 1000);
+    if (typeof updateTimestamp === "function") {
+        updateTimestamp();
+        setInterval(updateTimestamp, 60000);
+    }
+    
+    // Initial UI Setup for Scanner Box
+    updateScannerBoxUI();
 });
 
 // ==========================================
-// BUILD PROVIDER GRID
+// PROVIDER MODAL SYSTEM
 // ==========================================
-function buildProviderGrid() {
-    var grid = document.getElementById('providerGrid');
+function buildProviderModalGrid() {
+    var grid = document.getElementById('modalProviderGrid');
     if (!grid) return;
     grid.innerHTML = '';
-    PROVIDER_ORDER.forEach(function(key, i) {
+    PROVIDER_ORDER.forEach(function(key) {
         var p = GAME_DATABASE[key];
         if (!p) return;
         var btn = document.createElement('button');
-        btn.className = 'provider-card' + (i === 0 ? ' active' : '');
+        btn.className = 'modal-provider-btn';
         btn.setAttribute('data-provider', key);
-        btn.innerHTML = '<div class="provider-icon"><img src="' + p.logo + '" alt="' + p.name + '" onerror="this.style.display=\'none\'"></div><span class="provider-name">' + p.name + '</span><span class="provider-check">✓</span>';
+        btn.innerHTML = '<div class="m-prov-icon"><img src="' + p.logo + '" alt="' + p.name + '" onerror="this.style.display=\'none\'"></div><span class="m-prov-name">' + p.name + '</span>';
+        
         btn.addEventListener('click', function() {
             if (isScanning) return;
-            grid.querySelectorAll('.provider-card').forEach(function(c) { c.classList.remove('active'); });
-            btn.classList.add('active');
             currentProvider = key;
-            startScan();
+            updateScannerBoxUI();
+            closeProviderModal();
         });
         grid.appendChild(btn);
     });
+}
+
+function filterProvidersModal() {
+    var input = document.getElementById('providerSearch');
+    if(!input) return;
+    var filter = input.value.toUpperCase();
+    var buttons = document.getElementById('modalProviderGrid').getElementsByClassName('modal-provider-btn');
+    for (var i = 0; i < buttons.length; i++) {
+        var name = (buttons[i].textContent || buttons[i].innerText).toUpperCase();
+        buttons[i].style.display = name.indexOf(filter) > -1 ? '' : 'none';
+    }
+}
+
+function openProviderModal() {
+    if (isScanning) return;
+    document.getElementById('providerModal').style.display = 'flex';
+}
+
+function closeProviderModal() {
+    document.getElementById('providerModal').style.display = 'none';
+}
+
+function updateScannerBoxUI() {
+    var btn = document.getElementById('providerSelectBtn');
+    var icon = document.getElementById('selectedProvIcon');
+    var text = document.getElementById('selectedProvText');
+    var idContainer = document.getElementById('userIdContainer');
+    
+    if (!currentProvider) {
+        icon.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>';
+        text.textContent = 'Sila Pilih Provider...';
+        btn.classList.remove('selected');
+        idContainer.style.display = 'none';
+    } else {
+        var p = GAME_DATABASE[currentProvider];
+        icon.innerHTML = '<img src="' + p.logo + '" onerror="this.src=window.getFallbackImage(\'' + p.name + '\')" style="max-width:100%;max-height:100%;object-fit:cover; border-radius: 8px;" />';
+        text.textContent = p.name;
+        btn.classList.add('selected');
+        
+        // Show ID lock if restricted
+        if (RESTRICTED_PROVIDERS.includes(currentProvider)) {
+            idContainer.style.display = 'block';
+            idContainer.style.animation = 'slideDown 0.3s forwards';
+        } else {
+            idContainer.style.display = 'none';
+        }
+    }
 }
 
 // ==========================================
@@ -1412,19 +1461,43 @@ function runTerminalScan(providerName, onComplete) {
 // ==========================================
 function startScan() {
     if (isScanning) return;
+    
+    if (!currentProvider) {
+        openProviderModal();
+        return;
+    }
+    
+    if (RESTRICTED_PROVIDERS.includes(currentProvider)) {
+        var input = document.getElementById('userInputId');
+        var errorMsg = document.getElementById('idErrorMsg');
+        if (!input.value.trim()) {
+            document.getElementById('inputIdWrapper').classList.add('error');
+            errorMsg.style.display = 'block';
+            input.focus();
+            return;
+        } else {
+            document.getElementById('inputIdWrapper').classList.remove('error');
+            errorMsg.style.display = 'none';
+        }
+    }
+    
     isScanning = true;
     var scanSection = document.getElementById('scanningSection');
     var resultsSection = document.getElementById('resultsSection');
     var gameList = document.getElementById('gameList');
     var top3Section = document.getElementById('top3Section');
+    var ctrlBar = document.getElementById('ctrlBar');
     var pName = GAME_DATABASE[currentProvider] ? GAME_DATABASE[currentProvider].name : currentProvider.toUpperCase();
+    
     scanSection.style.display = 'block';
     resultsSection.style.display = 'none';
+    if(ctrlBar) ctrlBar.style.display = 'none';
     gameList.innerHTML = '';
     if (top3Section) top3Section.innerHTML = '';
     var sd = document.getElementById('scanDetail');
-    if (sd) sd.textContent = 'Target: ' + pName + ' • SQUEEN668';
+    if (sd) sd.textContent = 'Target: ' + pName + '   SQUEEN668';
     scanSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
     runTerminalScan(pName, function() {
         var flash = document.getElementById('scanFlash');
         if (flash) { flash.classList.add('active'); setTimeout(function() { flash.classList.remove('active'); }, 400); }
@@ -1432,6 +1505,7 @@ function startScan() {
         setTimeout(function() { document.body.classList.remove('scan-shake'); }, 500);
         scanSection.style.display = 'none';
         resultsSection.style.display = 'block';
+        if(ctrlBar) ctrlBar.style.display = 'flex';
         isScanning = false;
         loadGames(currentProvider);
         resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1579,3 +1653,10 @@ function shareResults(method) {
 window.startScan = startScan;
 window.shareResults = shareResults;
 console.log('%c SQUEEN668 RTP Scanner v4.2.1 ', 'background: #ff6b00; color: white; font-weight: bold; padding: 5px 10px; border-radius: 5px;');
+
+function resetIdError() {
+    var el = document.getElementById("inputIdWrapper");
+    if(el) el.classList.remove("error");
+    var msg = document.getElementById("idErrorMsg");
+    if(msg) msg.style.display = "none";
+}
