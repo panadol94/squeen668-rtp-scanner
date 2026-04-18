@@ -23,7 +23,7 @@
     --warm: #FF9B4A;
     --cold: #EF4444;
     --text-primary: #F0ECE2;
-    --text-dim: rgba(240, 236, 226, 0.4);
+    --text-dim: rgba(240, 236, 226, 0.62);
     --text-bright: #FFFFFF;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-display: 'Plus Jakarta Sans', 'Inter', sans-serif;
@@ -34,6 +34,10 @@
     --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.4);
     --nav-safe-height: 92px;
     --content-max-width: 1100px;
+    --space-sm: 12px;
+    --space-md: 20px;
+    --space-lg: 32px;
+    --space-xl: 48px;
 
     /* Cyberpunk Vault HUD tokens */
     --neon-cyan: #71D06B;
@@ -106,6 +110,7 @@ body::after {
     pointer-events: none;
     z-index: 0;
     overflow: hidden;
+    opacity: 0.35;
 }
 
 .particle-field span {
@@ -4410,4 +4415,550 @@ body {
         font-size: 6.4px !important;
         letter-spacing: 0.05em;
     }
+}
+
+/* =============================================
+   Hero status pill + Flow stepper (UX polish)
+   ============================================= */
+.hero-status-pill {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: var(--space-md);
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(24, 28, 18, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+    backdrop-filter: blur(8px);
+}
+
+.hero-status-pill .pill-label {
+    color: var(--hot);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.hero-status-pill .pill-sep {
+    opacity: 0.35;
+}
+
+.hero-status-pill strong {
+    color: var(--accent-light);
+    font-weight: 700;
+}
+
+.flow-stepper {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    margin: var(--space-lg) auto 0;
+    padding: 10px 16px;
+    max-width: var(--content-max-width);
+    background: rgba(11, 13, 9, 0.85);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow);
+}
+
+.flow-stepper ol {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.flow-step {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.flow-step > a,
+.flow-step > button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.flow-step > a:hover,
+.flow-step > button:hover {
+    color: var(--text-primary);
+}
+
+.flow-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--border-subtle);
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-dim);
+}
+
+.flow-step + .flow-step::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 50%;
+    width: 12px;
+    height: 1px;
+    background: var(--border-subtle);
+    transform: translateY(-50%);
+}
+
+.flow-step.is-active > a,
+.flow-step.is-active > button {
+    color: var(--text-bright);
+}
+
+.flow-step.is-active .flow-step-num {
+    background: var(--primary-gradient);
+    border-color: transparent;
+    color: #12150f;
+    box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+.flow-step.is-done > a,
+.flow-step.is-done > button {
+    color: var(--hot);
+}
+
+.flow-step.is-done .flow-step-num {
+    background: var(--hot);
+    border-color: transparent;
+    color: #0b0d09;
+}
+
+@media (max-width: 480px) {
+    .flow-stepper {
+        padding: 8px 10px;
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+    .flow-step-label {
+        display: none;
+    }
+    .flow-step > a,
+    .flow-step > button {
+        padding: 4px 6px;
+        gap: 4px;
+    }
+    .hero-status-pill {
+        font-size: 11px;
+        padding: 6px 12px;
+    }
+}
+
+/* =============================================
+   Provider card refinement
+   ============================================= */
+.provider-card {
+    min-height: 110px;
+    justify-content: center;
+}
+
+.provider-card .provider-name {
+    color: var(--text-primary);
+    opacity: 0.72;
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.provider-card:hover .provider-name {
+    opacity: 1;
+}
+
+.provider-card.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, rgba(240, 181, 72, 0.14), rgba(240, 181, 72, 0.04));
+    box-shadow: 0 6px 20px rgba(240, 181, 72, 0.18), inset 0 0 0 1px rgba(240, 181, 72, 0.35);
+    transform: translateY(-2px);
+}
+
+.provider-card.active .provider-name {
+    color: var(--accent-light);
+    opacity: 1;
+}
+
+.provider-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.provider-card .provider-icon {
+    transition: transform 0.25s ease;
+}
+
+.provider-card:hover .provider-icon,
+.provider-card.active .provider-icon {
+    transform: scale(1.04);
+}
+
+/* =============================================
+   Skeleton loader (game list)
+   ============================================= */
+.game-skeleton {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+    border-radius: var(--radius);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    animation: sk-fade-in 0.3s ease both;
+}
+
+.game-skeleton .sk-thumb {
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.game-skeleton .sk-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.game-skeleton .sk-line {
+    height: 10px;
+    border-radius: 6px;
+}
+
+.game-skeleton .sk-line-title { width: 60%; }
+.game-skeleton .sk-line-sub { width: 40%; height: 8px; }
+.game-skeleton .sk-line-bar { width: 100%; height: 6px; margin-top: 4px; }
+
+.game-skeleton .sk-gauge {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.game-skeleton .sk-thumb,
+.game-skeleton .sk-line,
+.game-skeleton .sk-gauge {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 0%,
+        rgba(255, 255, 255, 0.10) 50%,
+        rgba(255, 255, 255, 0.04) 100%
+    );
+    background-size: 200% 100%;
+    animation: sk-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes sk-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@keyframes sk-fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================================
+   Empty state (game list)
+   ============================================= */
+.games-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 40px 20px;
+    text-align: center;
+    background: var(--bg-card);
+    border: 1px dashed var(--border-subtle);
+    border-radius: var(--radius);
+    color: var(--text-primary);
+}
+
+.games-empty-icon {
+    font-size: 32px;
+    opacity: 0.6;
+}
+
+.games-empty h4 {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.games-empty p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-dim);
+    max-width: 320px;
+}
+
+/* =============================================
+   Toast
+   ============================================= */
+.ux-toast {
+    position: fixed;
+    left: 50%;
+    bottom: calc(var(--nav-safe-height) + 18px + env(safe-area-inset-bottom, 0px));
+    transform: translate(-50%, 12px);
+    z-index: 9999;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--text-bright);
+    background: rgba(11, 13, 9, 0.95);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-elevated);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    max-width: min(calc(100vw - 32px), 360px);
+    text-align: center;
+}
+
+.ux-toast.is-visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.ux-toast.is-success {
+    border-color: rgba(88, 208, 109, 0.55);
+    box-shadow: 0 10px 30px rgba(88, 208, 109, 0.18);
+}
+
+.ux-toast.is-error {
+    border-color: rgba(239, 68, 68, 0.55);
+    box-shadow: 0 10px 30px rgba(239, 68, 68, 0.22);
+}
+
+/* =============================================
+   Results board polish
+   ============================================= */
+.results-meta {
+    margin: 14px auto 24px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+/* Tone down top 3 shine + holo edge */
+.top3-card::after {
+    display: none;
+}
+
+.top3-gold::before {
+    display: none;
+}
+
+.top3-card {
+    backdrop-filter: none;
+}
+
+.top3-medal {
+    animation: none;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+}
+
+.top3-silver .top3-medal,
+.top3-bronze .top3-medal {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+}
+
+/* Filter tabs + sort alignment */
+.controls-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+/* Quieter share buttons */
+.share-section {
+    background: transparent;
+    border: none;
+    padding: 12px 14px 4px;
+}
+
+.share-title {
+    background: none;
+    -webkit-text-fill-color: var(--text-primary);
+    color: var(--text-primary);
+    font-size: 13px;
+}
+
+.share-btn {
+    text-transform: none;
+    letter-spacing: 0;
+    background: rgba(255, 255, 255, 0.03);
+    font-weight: 600;
+}
+
+.share-btn:hover {
+    transform: none;
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(240, 181, 72, 0.45);
+}
+
+/* =============================================
+   Bottom nav simplify
+   ============================================= */
+
+/* Strip decorative rings, orbits, and glints from center button */
+.center-hack-btn::before,
+.center-hack-btn::after,
+.center-hack-btn .hack-btn-ring,
+.center-hack-btn .hack-btn-orbit,
+.center-hack-btn .scan-medallion-glint,
+.center-hack-btn .scan-medallion-core {
+    display: none !important;
+    animation: none !important;
+}
+
+/* Calmer gold disc — no pulse, no radial highlight, flat solid gradient */
+.bottom-nav .center-hack-btn .hack-btn-inner {
+    animation: none;
+    background: var(--primary-gradient);
+    box-shadow:
+        0 6px 16px rgba(240, 181, 72, 0.28),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.18);
+    border-width: 2px;
+    width: 52px;
+    height: 52px;
+}
+
+.bottom-nav .center-hack-btn .scan-medallion-mark {
+    color: #1a1407;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    text-shadow: none;
+    animation: none;
+}
+
+.bottom-nav .center-hack-btn.disabled .hack-btn-inner {
+    background: rgba(240, 181, 72, 0.35);
+    box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.18);
+    animation: none;
+}
+
+.bottom-nav .center-hack-btn > #scanButtonLabel {
+    font-family: var(--font-body);
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent-light) !important;
+    text-shadow: none;
+    max-width: none;
+    margin-top: 2px;
+}
+
+.bottom-nav .center-hack-btn.disabled > #scanButtonLabel {
+    color: var(--text-dim) !important;
+}
+
+/* Equalize typography across all 5 nav items */
+.bottom-nav .nav-item span:not(#scanButtonLabel) {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
+}
+
+.bottom-nav .nav-item > svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* =============================================
+   Accessibility — focus rings + reduced motion
+   ============================================= */
+
+/* Baseline: kill default outline, rely on focus-visible */
+:focus { outline: none; }
+
+/* Visible focus ring only for keyboard users */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible,
+.filter-tab:focus-visible,
+.share-btn:focus-visible,
+.carousel-arrow:focus-visible,
+.nav-item:focus-visible,
+.hero-btn:focus-visible,
+.flow-step > a:focus-visible,
+.flow-step > button:focus-visible {
+    outline: 2px solid var(--accent-light);
+    outline-offset: 3px;
+    border-radius: 10px;
+}
+
+/* Higher-specificity ring for round controls so it hugs the shape */
+.carousel-arrow:focus-visible,
+.bottom-nav .center-hack-btn:focus-visible {
+    outline-offset: 4px;
+    border-radius: 50%;
+}
+
+.share-btn:focus-visible,
+.filter-tab:focus-visible {
+    outline-offset: 2px;
+    border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    .particle-field { display: none; }
 }
