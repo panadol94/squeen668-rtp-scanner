@@ -44,6 +44,8 @@ var currentProvider = '';
 var currentFilter = 'all';
 var currentGames = [];
 var isScanning = false;
+var currentDeviceIntel = null;
+var scanModalTimer = null;
 
 // ==========================================
 // INIT
@@ -188,37 +190,145 @@ function updateProviderHint(message, isError) {
         : 'Sila pilih provider dulu, lepas tu tekan HACK SLOT untuk mula scan.';
 }
 
+function escapeHtml(value) {
+    return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 // ==========================================
 // DEVICE INTELLIGENCE
 // ==========================================
-function initDeviceIntel() {
-    var panel = document.getElementById('deviceIntel');
-    if (!panel) return;
-    var info = { device: 'Unknown', screen: window.screen.width + '×' + window.screen.height, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, language: navigator.language, network: '—', isp: '—', location: '—', ip: '•••.•••.•••.•••' };
+function createBaseDeviceIntel() {
+    var info = {
+        device: 'Unknown Device',
+        screen: window.screen.width + '×' + window.screen.height,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        language: navigator.language,
+        network: 'Secure Link',
+        isp: 'Secure Tunnel',
+        location: 'Private Route',
+        ip: '•••.•••.•••.•••',
+        publicIp: 'Mengesan...'
+    };
     var ua = navigator.userAgent;
-    if (/iPhone/.test(ua)) { var m = ua.match(/iPhone\s?OS\s([\d_]+)/); info.device = 'iPhone (iOS ' + (m ? m[1].replace(/_/g, '.') : '') + ')'; }
-    else if (/Android/.test(ua)) { var m2 = ua.match(/Android\s([\d.]+);\s*([^;)]+)/); info.device = m2 ? m2[2].trim() + ' (Android ' + m2[1] + ')' : 'Android Device'; }
-    else if (/Windows/.test(ua)) info.device = 'Windows PC';
-    else if (/Mac/.test(ua)) info.device = 'MacOS';
-    try { var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection; if (conn) { info.network = (conn.effectiveType || conn.type || 'unknown').toUpperCase(); if (info.network === '4G') info.network = '4G LTE'; } } catch(e) {}
-    fetch('https://ip-api.com/json/?fields=query,isp,city,country').then(function(r) { return r.json(); }).then(function(geo) {
-        info.isp = geo.isp || '—'; info.location = (geo.city || '') + ', ' + (geo.country || '');
-        var parts = (geo.query || '').split('.'); if (parts.length === 4) info.ip = parts[0] + '.' + parts[1] + '.xxx.' + parts[3];
-        renderDevicePanel(info);
-    }).catch(function() { renderDevicePanel(info); });
+    if (/iPhone/.test(ua)) {
+        var ios = ua.match(/iPhone\s?OS\s([\d_]+)/);
+        info.device = 'iPhone (iOS ' + (ios ? ios[1].replace(/_/g, '.') : '') + ')';
+    } else if (/Android/.test(ua)) {
+        var android = ua.match(/Android\s([\d.]+);\s*([^;)]+)/);
+        info.device = android ? android[2].trim() + ' (Android ' + android[1] + ')' : 'Android Device';
+    } else if (/Windows/.test(ua)) {
+        info.device = 'Windows PC';
+    } else if (/Mac/.test(ua)) {
+        info.device = 'MacOS';
+    }
+    try {
+        var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (conn) {
+            info.network = (conn.effectiveType || conn.type || 'secure').toUpperCase();
+            if (info.network === '4G') info.network = '4G LTE';
+        }
+    } catch (e) {}
+    return info;
 }
 
-function renderDevicePanel(info) {
+function initDeviceIntel() {
     var panel = document.getElementById('deviceIntel');
-    if (!panel) return;
-    panel.innerHTML = '<div class="intel-header"><span>📡</span><span>DEVICE INFO</span><span class="intel-live">● LIVE</span></div><div class="intel-grid">' +
-        '<div class="intel-row"><span>📱</span><span>Device</span><span>' + info.device + '</span></div>' +
-        '<div class="intel-row"><span>🌐</span><span>ISP</span><span>' + info.isp + '</span></div>' +
-        '<div class="intel-row"><span>📍</span><span>Location</span><span>' + info.location + '</span></div>' +
-        '<div class="intel-row"><span>📶</span><span>Network</span><span>' + info.network + '</span></div>' +
-        '<div class="intel-row"><span>🖥️</span><span>Screen</span><span>' + info.screen + '</span></div>' +
-        '<div class="intel-row"><span>🕐</span><span>Timezone</span><span>' + info.timezone + '</span></div>' +
-        '<div class="intel-row"><span>🔒</span><span>IP</span><span class="intel-ip">' + info.ip + '</span></div></div>';
+    currentDeviceIntel = createBaseDeviceIntel();
+    if (panel) {
+        panel.hidden = true;
+        panel.setAttribute('aria-hidden', 'true');
+    }
+    fetch('https://ip-api.com/json/?fields=query,isp,city,country').then(function(r) { return r.json(); }).then(function(geo) {
+        currentDeviceIntel.isp = geo.isp || currentDeviceIntel.isp;
+        currentDeviceIntel.location = [geo.city, geo.country].filter(Boolean).join(', ') || currentDeviceIntel.location;
+        if (geo.query) {
+            currentDeviceIntel.publicIp = geo.query;
+            var parts = geo.query.split('.');
+            if (parts.length === 4) currentDeviceIntel.ip = parts[0] + '.' + parts[1] + '.xxx.' + parts[3];
+        }
+    }).catch(function() {});
+}
+
+function renderScanModal(providerName) {
+    var modalGrid = document.getElementById('scanModalGrid');
+    var modalProvider = document.getElementById('scanModalProvider');
+    var info = currentDeviceIntel || createBaseDeviceIntel();
+    if (modalProvider) modalProvider.textContent = providerName;
+    if (!modalGrid) return;
+    var rows = [
+        { icon: '📱', label: 'Device', value: info.device },
+        { icon: '🌐', label: 'ISP', value: info.isp },
+        { icon: '📍', label: 'Location', value: info.location },
+        { icon: '📶', label: 'Network', value: info.network },
+        { icon: '🖥️', label: 'Screen', value: info.screen },
+        { icon: '🕐', label: 'Timezone', value: info.timezone },
+        { icon: '🔒', label: 'IP Address', value: info.publicIp || info.ip, highlight: true },
+        { icon: '🎯', label: 'Target', value: providerName }
+    ];
+    modalGrid.innerHTML = rows.map(function(row) {
+        return '<div class="scan-modal-row">' +
+            '<span class="scan-modal-icon">' + row.icon + '</span>' +
+            '<span class="scan-modal-label">' + escapeHtml(row.label) + '</span>' +
+            '<span class="scan-modal-value' + (row.highlight ? ' is-highlight' : '') + '">' + escapeHtml(row.value) + '</span>' +
+        '</div>';
+    }).join('');
+}
+
+function closeScanModal() {
+    var modal = document.getElementById('scanModal');
+    if (scanModalTimer) {
+        clearTimeout(scanModalTimer);
+        scanModalTimer = null;
+    }
+    if (!modal) return;
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('scan-modal-open');
+}
+
+function openScanModal(providerName, onDone) {
+    var modal = document.getElementById('scanModal');
+    var modalStatus = document.getElementById('scanModalStatus');
+    var progressBar = document.getElementById('scanModalProgressBar');
+    if (!modal || !modalStatus || !progressBar) {
+        onDone();
+        return;
+    }
+
+    renderScanModal(providerName);
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('scan-modal-open');
+    progressBar.style.width = '8%';
+
+    var steps = [
+        { text: 'Mengunci session ' + providerName + '...', progress: 28, delay: 350 },
+        { text: 'Mengesan IP address awam...', progress: 56, delay: 450 },
+        { text: 'Menyambung ke nod analisis...', progress: 82, delay: 500 },
+        { text: 'Access granted. Scanner dimulakan...', progress: 100, delay: 450 }
+    ];
+
+    var index = 0;
+    function nextStep() {
+        if (index >= steps.length) {
+            scanModalTimer = setTimeout(function() {
+                closeScanModal();
+                onDone();
+            }, 220);
+            return;
+        }
+        var step = steps[index++];
+        modalStatus.textContent = step.text;
+        progressBar.style.width = step.progress + '%';
+        scanModalTimer = setTimeout(nextStep, step.delay);
+    }
+
+    nextStep();
 }
 
 // ==========================================
@@ -319,22 +429,25 @@ function startScan() {
     var gameList = document.getElementById('gameList');
     var top3Section = document.getElementById('top3Section');
     var pName = provider.name;
-    scanSection.style.display = 'block';
-    resultsSection.style.display = 'none';
-    gameList.innerHTML = '';
-    if (top3Section) top3Section.innerHTML = '';
 
-    var sd = document.getElementById('scanDetail');
-    if (sd) sd.textContent = 'Provider: ' + pName + ' • SQUEEN668';
+    openScanModal(pName, function() {
+        scanSection.style.display = 'block';
+        resultsSection.style.display = 'none';
+        gameList.innerHTML = '';
+        if (top3Section) top3Section.innerHTML = '';
 
-    scanSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        var sd = document.getElementById('scanDetail');
+        if (sd) sd.textContent = 'Provider: ' + pName + ' • SQUEEN668';
 
-    runScanProgress(pName, function() {
-        scanSection.style.display = 'none';
-        resultsSection.style.display = 'block';
-        isScanning = false;
-        loadGames(currentProvider);
-        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        scanSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        runScanProgress(pName, function() {
+            scanSection.style.display = 'none';
+            resultsSection.style.display = 'block';
+            isScanning = false;
+            loadGames(currentProvider);
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
     });
 }
 
