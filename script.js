@@ -59,11 +59,86 @@ document.addEventListener('DOMContentLoaded', function() {
     initBottomNav();
     initMatrixRain();
     initDeviceIntel();
+    initCarousel();
     loadGames(currentProvider);
     updateTimestamp();
     setInterval(updateTimestamp, 60000);
     setInterval(function() { loadGames(currentProvider); }, SCANNER_CONFIG.seedInterval * 60 * 1000);
 });
+
+// ==========================================
+// BANNER CAROUSEL
+// ==========================================
+var carouselCurrent = 0;
+var carouselTotal = 0;
+var carouselTimer = null;
+
+function initCarousel() {
+    var track = document.getElementById('carouselTrack');
+    var dotsContainer = document.getElementById('carouselDots');
+    if (!track || !dotsContainer) return;
+
+    var slides = track.querySelectorAll('.carousel-slide');
+    carouselTotal = slides.length;
+    if (carouselTotal === 0) return;
+
+    // Build dots
+    dotsContainer.innerHTML = '';
+    for (var i = 0; i < carouselTotal; i++) {
+        var dot = document.createElement('button');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('data-index', i);
+        dot.addEventListener('click', function() {
+            goToSlide(parseInt(this.getAttribute('data-index')));
+        });
+        dotsContainer.appendChild(dot);
+    }
+
+    // Arrow buttons
+    var prevBtn = document.getElementById('carouselPrev');
+    var nextBtn = document.getElementById('carouselNext');
+    if (prevBtn) prevBtn.addEventListener('click', function() { goToSlide(carouselCurrent - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { goToSlide(carouselCurrent + 1); });
+
+    // Swipe support
+    var carousel = document.querySelector('.banner-carousel');
+    if (carousel) {
+        var startX = 0;
+        carousel.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+        carousel.addEventListener('touchend', function(e) {
+            var diff = startX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 40) {
+                goToSlide(diff > 0 ? carouselCurrent + 1 : carouselCurrent - 1);
+            }
+        }, { passive: true });
+    }
+
+    // Auto-play
+    startCarouselTimer();
+}
+
+function goToSlide(index) {
+    if (carouselTotal === 0) return;
+    carouselCurrent = ((index % carouselTotal) + carouselTotal) % carouselTotal;
+    var track = document.getElementById('carouselTrack');
+    track.style.transform = 'translateX(-' + (carouselCurrent * (100 / carouselTotal)) + '%)';
+
+    // Update dots
+    var dots = document.querySelectorAll('.carousel-dot');
+    dots.forEach(function(d, i) {
+        d.classList.toggle('active', i === carouselCurrent);
+    });
+
+    // Reset auto-play timer
+    startCarouselTimer();
+}
+
+function startCarouselTimer() {
+    if (carouselTimer) clearInterval(carouselTimer);
+    carouselTimer = setInterval(function() {
+        goToSlide(carouselCurrent + 1);
+    }, 4000);
+}
 
 // ==========================================
 // BUILD PROVIDER GRID
