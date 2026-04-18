@@ -9150,11 +9150,11 @@ window.SQUEEN668_GAME_DATABASE = {
         "img": "https://storage.googleapis.com/images.imbaweb.com/game/SG/1x1/img_jpg/S-ZE01_1x1_w240.jpg"
       }
     ]
-,
+  },
   "m8": {
     "name": "MEGA888",
     "code": "M8",
-    "logo": "assets/cat-slot.png",
+    "logo": "assets/mega.png",
     "games": [
       {
             "name": "10,001 Nights",
