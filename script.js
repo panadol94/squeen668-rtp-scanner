@@ -245,12 +245,12 @@ function updateProviderHint(message, isError) {
         return;
     }
     hint.textContent = provider
-        ? 'Provider dipilih: ' + provider.name + '. Tekan HACK SLOT untuk mula scan.'
-        : 'Sila pilih provider dulu, lepas tu tekan HACK SLOT untuk mula scan.';
+        ? 'Provider dipilih: ' + provider.name + '. Tekan SCAN untuk mula scan.'
+        : 'Sila pilih provider dulu, lepas tu tekan SCAN untuk mula scan.';
     if (missionTitle) missionTitle.textContent = provider ? 'Scan ' + provider.name + ' sekarang' : 'Pilih provider untuk mula scan';
     if (missionText) missionText.textContent = provider
-        ? provider.name + ' dah ready. Tekan Go atau button scan bawah untuk teruskan.'
-        : 'Pilih provider dekat Recommended Provider atau All Provider, lepas tu tekan Go.';
+        ? provider.name + ' dah ready. Tekan Scan atau button bawah untuk teruskan.'
+        : 'Pilih provider dekat Recommended Provider atau All Provider, lepas tu tekan Scan.';
     if (missionProgress) missionProgress.style.width = provider ? '100%' : '36%';
 }
 
@@ -792,7 +792,18 @@ function initSortSelect() {
 }
 function initBottomNav() {
     document.querySelectorAll('.nav-item').forEach(function(item) {
-        item.addEventListener('click', function(e) { e.preventDefault(); document.querySelectorAll('.nav-item').forEach(function(i) { i.classList.remove('active'); }); this.classList.add('active'); });
+        item.addEventListener('click', function(e) {
+            var href = this.getAttribute('href') || '';
+            document.querySelectorAll('.nav-item').forEach(function(i) { i.classList.remove('active'); });
+            this.classList.add('active');
+            if (href && href !== '#') {
+                e.preventDefault();
+                var target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                e.preventDefault();
+            }
+        });
     });
 }
 function updateTimestamp() {

@@ -10705,7 +10705,7 @@ window.SQUEEN668_GAME_DATABASE = {
             "img": "assets/mega888/Zombie_01.png"
       }
 ]
-,
+  },
   "k918": {
     "name": "918KISS",
     "code": "K918",
