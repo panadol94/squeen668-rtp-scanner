@@ -34,6 +34,10 @@
     --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.4);
     --nav-safe-height: 92px;
     --content-max-width: 1100px;
+    --space-sm: 12px;
+    --space-md: 20px;
+    --space-lg: 32px;
+    --space-xl: 48px;
 
     /* Cyberpunk Vault HUD tokens */
     --neon-cyan: #71D06B;
@@ -106,6 +110,7 @@ body::after {
     pointer-events: none;
     z-index: 0;
     overflow: hidden;
+    opacity: 0.35;
 }
 
 .particle-field span {
@@ -4409,5 +4414,164 @@ body {
         max-width: 44px;
         font-size: 6.4px !important;
         letter-spacing: 0.05em;
+    }
+}
+
+/* =============================================
+   Hero status pill + Flow stepper (UX polish)
+   ============================================= */
+.hero-status-pill {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: var(--space-md);
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(24, 28, 18, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+    backdrop-filter: blur(8px);
+}
+
+.hero-status-pill .pill-label {
+    color: var(--hot);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.hero-status-pill .pill-sep {
+    opacity: 0.35;
+}
+
+.hero-status-pill strong {
+    color: var(--accent-light);
+    font-weight: 700;
+}
+
+.flow-stepper {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    margin: var(--space-lg) auto 0;
+    padding: 10px 16px;
+    max-width: var(--content-max-width);
+    background: rgba(11, 13, 9, 0.85);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow);
+}
+
+.flow-stepper ol {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.flow-step {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.flow-step > a,
+.flow-step > button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.flow-step > a:hover,
+.flow-step > button:hover {
+    color: var(--text-primary);
+}
+
+.flow-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--border-subtle);
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-dim);
+}
+
+.flow-step + .flow-step::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 50%;
+    width: 12px;
+    height: 1px;
+    background: var(--border-subtle);
+    transform: translateY(-50%);
+}
+
+.flow-step.is-active > a,
+.flow-step.is-active > button {
+    color: var(--text-bright);
+}
+
+.flow-step.is-active .flow-step-num {
+    background: var(--primary-gradient);
+    border-color: transparent;
+    color: #12150f;
+    box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+.flow-step.is-done > a,
+.flow-step.is-done > button {
+    color: var(--hot);
+}
+
+.flow-step.is-done .flow-step-num {
+    background: var(--hot);
+    border-color: transparent;
+    color: #0b0d09;
+}
+
+@media (max-width: 480px) {
+    .flow-stepper {
+        padding: 8px 10px;
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+    .flow-step-label {
+        display: none;
+    }
+    .flow-step > a,
+    .flow-step > button {
+        padding: 4px 6px;
+        gap: 4px;
+    }
+    .hero-status-pill {
+        font-size: 11px;
+        padding: 6px 12px;
     }
 }

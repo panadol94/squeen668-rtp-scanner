@@ -49,9 +49,24 @@ var scanModalTimer = null;
 var currentRtpChart = null;
 
 // ==========================================
+// FLOW STEPPER
+// ==========================================
+var FLOW_STEP_ORDER = ['provider', 'scan', 'result'];
+function setFlowStep(step) {
+    var idx = FLOW_STEP_ORDER.indexOf(step);
+    if (idx < 0) return;
+    document.querySelectorAll('.flow-step').forEach(function(el) {
+        var i = FLOW_STEP_ORDER.indexOf(el.getAttribute('data-step'));
+        el.classList.toggle('is-active', i === idx);
+        el.classList.toggle('is-done', i > -1 && i < idx);
+    });
+}
+
+// ==========================================
 // INIT
 // ==========================================
 document.addEventListener('DOMContentLoaded', function() {
+    setFlowStep('provider');
     buildProviderGrid();
     buildFeaturedProviders();
     initFilterTabs();
@@ -213,6 +228,7 @@ function selectProvider(key) {
         card.classList.toggle('active', card.getAttribute('data-provider') === key);
     });
     if (resultsSection) resultsSection.style.display = 'none';
+    setFlowStep('provider');
     updateScanButtonState();
     updateProviderHint();
     updateBottomNavVisibility();
@@ -575,6 +591,7 @@ function startScan() {
         return;
     }
     isScanning = true;
+    setFlowStep('scan');
     updateProviderHint();
     var scanSection = document.getElementById('scanningSection');
     var resultsSection = document.getElementById('resultsSection');
@@ -599,6 +616,7 @@ function startScan() {
             isScanning = false;
             loadGames(currentProvider);
             updateBottomNavVisibility();
+            setFlowStep('result');
             resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
