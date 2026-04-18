@@ -1,4 +1,4 @@
-/* Auto-generated from 99laju.net slot catalogue. Do not edit by hand. */
+/* Auto-generated game database. Do not edit by hand. */
 window.SQUEEN668_GAME_DATABASE = {
   "pp": {
     "name": "PRAGMATIC PLAY",
