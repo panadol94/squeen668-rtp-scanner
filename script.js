@@ -300,25 +300,16 @@ function updateScanButtonState() {
 
 function updateProviderHint(message, isError) {
     var hint = document.getElementById('providerHint');
-    var missionTitle = document.getElementById('scanMissionTitle');
-    var missionText = document.getElementById('scanMissionText');
-    var missionProgress = document.getElementById('scanMissionProgress');
     var provider = GAME_DATABASE[currentProvider];
     if (!hint) return;
     hint.classList.toggle('error', !!isError);
     if (message) {
         hint.textContent = message;
-        if (missionText) missionText.textContent = message;
         return;
     }
     hint.textContent = provider
         ? 'Provider dipilih: ' + provider.name + '. Tekan SCAN untuk mula scan.'
         : 'Sila pilih provider dulu, lepas tu tekan SCAN untuk mula scan.';
-    if (missionTitle) missionTitle.textContent = provider ? 'Scan ' + provider.name + ' sekarang' : 'Pilih provider untuk mula scan';
-    if (missionText) missionText.textContent = provider
-        ? provider.name + ' dah ready. Tekan Scan atau button bawah untuk teruskan.'
-        : 'Pilih provider dekat Recommended Provider atau All Provider, lepas tu tekan Scan.';
-    if (missionProgress) missionProgress.style.width = provider ? '100%' : '36%';
 }
 
 function escapeHtml(value) {
@@ -747,19 +738,10 @@ function animateCounter(id, target) {
     var el = document.getElementById(id); if (!el) return;
     var cur = parseInt(el.textContent) || 0; if (cur === target) return;
     var step = target > cur ? 1 : -1;
-    var card = el.closest('.stat-card, .hero-stat-card');
     var t = setInterval(function() {
         cur += step;
         el.textContent = cur;
-        if (cur === target) {
-            clearInterval(t);
-            if (card) {
-                card.classList.remove('flash');
-                void card.offsetWidth;
-                card.classList.add('flash');
-                setTimeout(function() { card.classList.remove('flash'); }, 700);
-            }
-        }
+        if (cur === target) clearInterval(t);
     }, 50);
 }
 
