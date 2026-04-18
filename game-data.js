@@ -10709,7 +10709,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "k918": {
     "name": "918KISS",
     "code": "K918",
-    "logo": "assets/cat-slot.png",
+    "logo": "assets/kissh5.png",
     "games": [
       {
             "name": "12 Rou Icon0",
@@ -11184,7 +11184,574 @@ window.SQUEEN668_GAME_DATABASE = {
             "img": "assets/kiss918/ZcjbIcon0.png"
       }
 ]
+  },
+  "pussy888": {
+    "name": "Pussy888",
+    "code": "PUSSY888",
+    "logo": "assets/pussy888-logo.png",
+    "games": [
+      {
+        "name": "5 Kind",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "6 Kind",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "A Night Out",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/JKR/1x1/img_jpg/69xaiyrbo4dae_1x1_w240.jpg"
+      },
+      {
+        "name": "African",
+        "img": "assets/pussy888/african.png"
+      },
+      {
+        "name": "Age Of Egypt",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Amazon",
+        "img": "assets/mega888/AmazonIcon0.png"
+      },
+      {
+        "name": "Archer",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/PZ/1x1/img_jpg/gpas_archer_pop_1x1_w240.jpg"
+      },
+      {
+        "name": "Arctic",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Baccarat",
+        "img": "assets/mega888/BaccaratIcon0.png"
+      },
+      {
+        "name": "Bai Shi",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/PZ/1x1/img_jpg/bs_1x1_w240.jpg"
+      },
+      {
+        "name": "Banana Monkey",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Beach Life",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/PZ/1x1/img_jpg/bl_1x1_w240.jpg"
+      },
+      {
+        "name": "Belangkai",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Big Shot",
+        "img": "assets/pussy888/bigshot.png"
+      },
+      {
+        "name": "Big Win 0",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Blackjack",
+        "img": "assets/pussy888/blackjack.png"
+      },
+      {
+        "name": "Bonus Bears",
+        "img": "assets/pussy888/bonusbears.png"
+      },
+      {
+        "name": "Boxing",
+        "img": "assets/pussy888/boxing.png"
+      },
+      {
+        "name": "Boy King",
+        "img": "assets/pussy888/boyking.png"
+      },
+      {
+        "name": "Buffalo Blitz",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Casino War",
+        "img": "assets/mega888/CasinoWarIcon0.png"
+      },
+      {
+        "name": "Cat Queen",
+        "img": "assets/pussy888/catqueen.png"
+      },
+      {
+        "name": "Cherry Love",
+        "img": "assets/pussy888/cherrylove.png"
+      },
+      {
+        "name": "Circus",
+        "img": "assets/mega888/CircusIcon0.png"
+      },
+      {
+        "name": "Cleopatra",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/GP/1x1/img_jpg/cleopatra_1x1_w240.jpg"
+      },
+      {
+        "name": "Cookie Pop",
+        "img": "assets/pussy888/cookiepop.png"
+      },
+      {
+        "name": "Coyote Cash",
+        "img": "assets/mega888/CoyoteCashIcon0.png"
+      },
+      {
+        "name": "Crops Of Gold",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Da Cai Shen",
+        "img": "assets/pussy888/dacaishen.png"
+      },
+      {
+        "name": "Desert Treasure",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/PZ/1x1/img_jpg/mobdt_1x1_w240.jpg"
+      },
+      {
+        "name": "Diamond 7",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/NEXTSPIN/1x1/img_jpg/sDiamond7_1x1_w240.jpg"
+      },
+      {
+        "name": "Discovery",
+        "img": "assets/mega888/DiscoveryIcon0.png"
+      },
+      {
+        "name": "Dolphin Reef",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/JKR/1x1/img_jpg/rh8iwwntk3mie_1x1_w240.jpg"
+      },
+      {
+        "name": "Dragon Gold",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/SG/1x1/img_jpg/S-DG03_1x1_w240.jpg"
+      },
+      {
+        "name": "Dragon Tiger Blue",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Dragon Tiger Green",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Dragon Tiger Red",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Dragons",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Easter",
+        "img": "assets/mega888/EasterIcon0.png"
+      },
+      {
+        "name": "Egypt",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Emperor Gate",
+        "img": "assets/pussy888/emperorgate.png"
+      },
+      {
+        "name": "Fairy Garden",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Fei Cui Gong Zhu",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/PZ/1x1/img_jpg/fcgz_1x1_w240.jpg"
+      },
+      {
+        "name": "Fengshen",
+        "img": "assets/pussy888/fengshen.png"
+      },
+      {
+        "name": "Fhzshi",
+        "img": "assets/pussy888/fhzshi.png"
+      },
+      {
+        "name": "Fishing Star",
+        "img": "assets/pussy888/fishingstar.png"
+      },
+      {
+        "name": "Fishingds",
+        "img": "assets/pussy888/fishingds.png"
+      },
+      {
+        "name": "Fishingjc",
+        "img": "assets/pussy888/fishingjc.png"
+      },
+      {
+        "name": "Fishinglk",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Foot Ball Carnival",
+        "img": "assets/pussy888/footballcarnival.png"
+      },
+      {
+        "name": "For Tune",
+        "img": "assets/pussy888/fortune.png"
+      },
+      {
+        "name": "Fortune Lions",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/PZ/1x1/img_jpg/frtln_1x1_w240.jpg"
+      },
+      {
+        "name": "Fortunes Fox",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Gaelicluck",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Garden",
+        "img": "assets/mega888/GardenIcon0.png"
+      },
+      {
+        "name": "Geisha",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/JKR/1x1/img_jpg/qxoindypyeboy_1x1_w240.jpg"
+      },
+      {
+        "name": "Ghost",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Girls",
+        "img": "assets/pussy888/girls.png"
+      },
+      {
+        "name": "God Of Wealth",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Gold",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Golden Lotus",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Golden Tour",
+        "img": "assets/pussy888/goldentour.png"
+      },
+      {
+        "name": "Golden Tree",
+        "img": "assets/mega888/GoldenTreeIcon0.png"
+      },
+      {
+        "name": "Goldenslut",
+        "img": "assets/pussy888/goldenslut.png"
+      },
+      {
+        "name": "Great Blue",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/JKR/1x1/img_jpg/t656f48j75z6a_1x1_w240.jpg"
+      },
+      {
+        "name": "Great China",
+        "img": "assets/pussy888/greatchina.png"
+      },
+      {
+        "name": "Great Stars",
+        "img": "assets/pussy888/greatstars.png"
+      },
+      {
+        "name": "Green Light",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Hall Red Pack",
+        "img": "assets/pussy888/hallredpack.png"
+      },
+      {
+        "name": "Halljp",
+        "img": "assets/pussy888/halljp.png"
+      },
+      {
+        "name": "Halloween Party",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Highway",
+        "img": "assets/pussy888/highway.png"
+      },
+      {
+        "name": "Hold Em",
+        "img": "assets/mega888/HoldEnIcon0.png"
+      },
+      {
+        "name": "Hologram Wilds",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/PZ/1x1/img_jpg/hwilds_1x1_w240.jpg"
+      },
+      {
+        "name": "Hulu Cock",
+        "img": "assets/mega888/HuluCockIcon0.png"
+      },
+      {
+        "name": "Ice Land",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Indian",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Irish Luck",
+        "img": "assets/pussy888/irishluck.png"
+      },
+      {
+        "name": "Japan",
+        "img": "assets/mega888/JapanIcon0.png"
+      },
+      {
+        "name": "Jqw",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Kimochi",
+        "img": "assets/pussy888/kimochi.png"
+      },
+      {
+        "name": "Madness",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Magical Spin",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Mega 1",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Money Fever",
+        "img": "assets/mega888/MoneyFeverIcon0.png"
+      },
+      {
+        "name": "Neptune Treasure",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/JKR/1x1/img_jpg/5ii9zgw5unc3h_1x1_w240.jpg"
+      },
+      {
+        "name": "Ocean King",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "On Baccarat",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "On Dragon",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "On Niuniu",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "On Roulette",
+        "img": "assets/pussy888/on_roulette.png"
+      },
+      {
+        "name": "On Sicbo",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "On Single",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Orient",
+        "img": "assets/pussy888/orient.png"
+      },
+      {
+        "name": "Panjl",
+        "img": "assets/pussy888/panjl.png"
+      },
+      {
+        "name": "Panther Moon",
+        "img": "assets/pussy888/panthermoon.png"
+      },
+      {
+        "name": "Penguin",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Pirate Ship",
+        "img": "assets/mega888/PirateShipIcon0.png"
+      },
+      {
+        "name": "Poker Three",
+        "img": "assets/mega888/PokerThreeIcon0.png"
+      },
+      {
+        "name": "Pyramid",
+        "img": "assets/pussy888/pyramid.png"
+      },
+      {
+        "name": "Qznw",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Rally",
+        "img": "assets/pussy888/rally.png"
+      },
+      {
+        "name": "Ranch Story",
+        "img": "assets/mega888/RanchStoryIcon0.png"
+      },
+      {
+        "name": "Roaring",
+        "img": "assets/pussy888/roaring.png"
+      },
+      {
+        "name": "Robin Hood",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/JKR/1x1/img_jpg/i4rc816e388c6_1x1_w240.jpg"
+      },
+      {
+        "name": "Roulette 12",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Roulette 24",
+        "img": "assets/pussy888/roulette24.png"
+      },
+      {
+        "name": "Roulette 36",
+        "img": "assets/pussy888/roulette36.png"
+      },
+      {
+        "name": "Roulette 72",
+        "img": "assets/pussy888/roulette72.png"
+      },
+      {
+        "name": "Safari Heat",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/JKR/1x1/img_jpg/4d5kdkpqi6sk4_1x1_w240.jpg"
+      },
+      {
+        "name": "Samurai",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/AG/1x1/img_jpg/SB06_1x1_w240.jpg"
+      },
+      {
+        "name": "Sanguo",
+        "img": "assets/pussy888/sanguo.png"
+      },
+      {
+        "name": "Santa Surprise",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/JKR/1x1/img_jpg/ufc6t3z8hu17w_1x1_w240.jpg"
+      },
+      {
+        "name": "Sea World",
+        "img": "assets/mega888/SeaWorldIcon0.png"
+      },
+      {
+        "name": "Shining Stars",
+        "img": "assets/mega888/ShiningStarsIcon0.png"
+      },
+      {
+        "name": "Shz",
+        "img": "assets/pussy888/shz.png"
+      },
+      {
+        "name": "Sicbo",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/AG/1x1/img_jpg/EP03_1x1_w240.jpg"
+      },
+      {
+        "name": "Singlepick",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Slot Sex Game",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Slots Jpgame",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Sparta 30",
+        "img": "assets/pussy888/Sparta30.png"
+      },
+      {
+        "name": "Sparta 9",
+        "img": "assets/pussy888/Sparta9.png"
+      },
+      {
+        "name": "Stone Age",
+        "img": "assets/mega888/StoneAgeIcon0.png"
+      },
+      {
+        "name": "Sun Wu Kong",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Superwin 2",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "T-Rex",
+        "img": "assets/mega888/TRexIcon0.png"
+      },
+      {
+        "name": "Tallyho",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Thai",
+        "img": "assets/mega888/ThaiIcon0.png"
+      },
+      {
+        "name": "Thai Temple",
+        "img": "assets/pussy888/thaitemple.png"
+      },
+      {
+        "name": "Top Gun",
+        "img": "assets/mega888/TopGun0.png"
+      },
+      {
+        "name": "Treasure Island",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/CQ9/1x1/img_jpg/81_1x1_w240.jpg"
+      },
+      {
+        "name": "Twister",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Ultimate 3",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Waters",
+        "img": "assets/pussy888/waters.png"
+      },
+      {
+        "name": "Westernrs",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Wild Fox",
+        "img": "assets/pussy888/wildfox.png"
+      },
+      {
+        "name": "Witch",
+        "img": "assets/mega888/WitchIcon0.png"
+      },
+      {
+        "name": "Ycl",
+        "img": "assets/pussy888-logo.png"
+      },
+      {
+        "name": "Years Of Fish",
+        "img": "assets/pussy888/yearsoffish.png"
+      },
+      {
+        "name": "Zhao Cai Jin Bao",
+        "img": "https://storage.googleapis.com/images.imbaweb.com/game/PZ/1x1/img_jpg/zcjb_1x1_w240.jpg"
+      }
+    ]
   }
 };
-window.SQUEEN668_PROVIDER_ORDER = ["m8", "k918", "pp", "pz", "jkr", "ag", "cq9", "ep", "fc", "gp", "jdb", "je", "li_22", "nextspin", "sg"];
+window.SQUEEN668_PROVIDER_ORDER = ["m8", "k918", "pussy888", "pp", "pz", "jkr", "ag", "cq9", "ep", "fc", "gp", "jdb", "je", "li_22", "nextspin", "sg"];
 window.SQUEEN668_DEFAULT_PROVIDER = "pp";
