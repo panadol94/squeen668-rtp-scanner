@@ -289,11 +289,11 @@ function updateScanButtonState() {
     if (!scanButton || !scanButtonLabel) return;
     if (provider) {
         scanButton.classList.remove('disabled');
-        scanButtonLabel.textContent = 'PATCHER SLOT';
+        scanButtonLabel.textContent = 'SCAN';
         scanButton.setAttribute('aria-label', 'Patcher Slot ready untuk scan ' + provider.name);
     } else {
         scanButton.classList.add('disabled');
-        scanButtonLabel.textContent = 'PATCHER SLOT';
+        scanButtonLabel.textContent = 'SCAN';
         scanButton.setAttribute('aria-label', 'Patcher Slot, pilih provider dulu');
     }
 }

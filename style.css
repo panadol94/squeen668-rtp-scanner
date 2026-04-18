@@ -4763,3 +4763,153 @@ body {
     border-color: rgba(239, 68, 68, 0.55);
     box-shadow: 0 10px 30px rgba(239, 68, 68, 0.22);
 }
+
+/* =============================================
+   Results board polish
+   ============================================= */
+.results-meta {
+    margin: 14px auto 24px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+/* Tone down top 3 shine + holo edge */
+.top3-card::after {
+    display: none;
+}
+
+.top3-gold::before {
+    display: none;
+}
+
+.top3-card {
+    backdrop-filter: none;
+}
+
+.top3-medal {
+    animation: none;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+}
+
+.top3-silver .top3-medal,
+.top3-bronze .top3-medal {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+}
+
+/* Filter tabs + sort alignment */
+.controls-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+/* Quieter share buttons */
+.share-section {
+    background: transparent;
+    border: none;
+    padding: 12px 14px 4px;
+}
+
+.share-title {
+    background: none;
+    -webkit-text-fill-color: var(--text-primary);
+    color: var(--text-primary);
+    font-size: 13px;
+}
+
+.share-btn {
+    text-transform: none;
+    letter-spacing: 0;
+    background: rgba(255, 255, 255, 0.03);
+    font-weight: 600;
+}
+
+.share-btn:hover {
+    transform: none;
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(240, 181, 72, 0.45);
+}
+
+/* =============================================
+   Bottom nav simplify
+   ============================================= */
+
+/* Strip decorative rings, orbits, and glints from center button */
+.center-hack-btn::before,
+.center-hack-btn::after,
+.center-hack-btn .hack-btn-ring,
+.center-hack-btn .hack-btn-orbit,
+.center-hack-btn .scan-medallion-glint,
+.center-hack-btn .scan-medallion-core {
+    display: none !important;
+    animation: none !important;
+}
+
+/* Calmer gold disc — no pulse, no radial highlight, flat solid gradient */
+.bottom-nav .center-hack-btn .hack-btn-inner {
+    animation: none;
+    background: var(--primary-gradient);
+    box-shadow:
+        0 6px 16px rgba(240, 181, 72, 0.28),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.18);
+    border-width: 2px;
+    width: 52px;
+    height: 52px;
+}
+
+.bottom-nav .center-hack-btn .scan-medallion-mark {
+    color: #1a1407;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    text-shadow: none;
+    animation: none;
+}
+
+.bottom-nav .center-hack-btn.disabled .hack-btn-inner {
+    background: rgba(240, 181, 72, 0.35);
+    box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.18);
+    animation: none;
+}
+
+.bottom-nav .center-hack-btn > #scanButtonLabel {
+    font-family: var(--font-body);
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent-light) !important;
+    text-shadow: none;
+    max-width: none;
+    margin-top: 2px;
+}
+
+.bottom-nav .center-hack-btn.disabled > #scanButtonLabel {
+    color: var(--text-dim) !important;
+}
+
+/* Equalize typography across all 5 nav items */
+.bottom-nav .nav-item span:not(#scanButtonLabel) {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
+}
+
+.bottom-nav .nav-item > svg {
+    width: 22px;
+    height: 22px;
+}
