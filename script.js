@@ -40,9 +40,7 @@ var SCANNER_CONFIG = {
 // ==========================================
 // STATE
 // ==========================================
-var currentProvider = (window.SQUEEN668_DEFAULT_PROVIDER && GAME_DATABASE[window.SQUEEN668_DEFAULT_PROVIDER]
-    ? window.SQUEEN668_DEFAULT_PROVIDER
-    : PROVIDER_ORDER[0]) || '';
+var currentProvider = '';
 var currentFilter = 'all';
 var currentGames = [];
 var isScanning = false;
@@ -57,10 +55,13 @@ document.addEventListener('DOMContentLoaded', function() {
     initBottomNav();
     initDeviceIntel();
     initCarousel();
-    loadGames(currentProvider);
+    updateScanButtonState();
+    updateProviderHint();
     updateTimestamp();
     setInterval(updateTimestamp, 60000);
-    setInterval(function() { loadGames(currentProvider); }, SCANNER_CONFIG.seedInterval * 60 * 1000);
+    setInterval(function() {
+        if (currentProvider && currentGames.length) loadGames(currentProvider);
+    }, SCANNER_CONFIG.seedInterval * 60 * 1000);
 });
 
 // ==========================================
@@ -138,22 +139,53 @@ function buildProviderGrid() {
     var grid = document.getElementById('providerGrid');
     if (!grid) return;
     grid.innerHTML = '';
-    PROVIDER_ORDER.forEach(function(key, i) {
+    PROVIDER_ORDER.forEach(function(key) {
         var p = GAME_DATABASE[key];
         if (!p) return;
         var btn = document.createElement('button');
-        btn.className = 'provider-card' + (i === 0 ? ' active' : '');
+        btn.className = 'provider-card' + (currentProvider === key ? ' active' : '');
         btn.setAttribute('data-provider', key);
         btn.innerHTML = '<div class="provider-icon"><img src="' + p.logo + '" alt="' + p.name + '" onerror="this.onerror=null; this.src=window.getFallbackImage(\'' + p.name + '\')"></div><span class="provider-name">' + p.name + '</span><span class="provider-check">✓</span>';
         btn.addEventListener('click', function() {
+            var resultsSection = document.getElementById('resultsSection');
             if (isScanning) return;
             grid.querySelectorAll('.provider-card').forEach(function(c) { c.classList.remove('active'); });
             btn.classList.add('active');
             currentProvider = key;
-            startScan();
+            if (resultsSection) resultsSection.style.display = 'none';
+            updateScanButtonState();
+            updateProviderHint();
         });
         grid.appendChild(btn);
     });
+}
+
+function updateScanButtonState() {
+    var scanButton = document.getElementById('scanButton');
+    var scanButtonLabel = document.getElementById('scanButtonLabel');
+    var provider = GAME_DATABASE[currentProvider];
+    if (!scanButton || !scanButtonLabel) return;
+    if (provider) {
+        scanButton.classList.remove('disabled');
+        scanButtonLabel.textContent = 'SCAN ' + provider.name;
+    } else {
+        scanButton.classList.add('disabled');
+        scanButtonLabel.textContent = 'PILIH PROVIDER';
+    }
+}
+
+function updateProviderHint(message, isError) {
+    var hint = document.getElementById('providerHint');
+    var provider = GAME_DATABASE[currentProvider];
+    if (!hint) return;
+    hint.classList.toggle('error', !!isError);
+    if (message) {
+        hint.textContent = message;
+        return;
+    }
+    hint.textContent = provider
+        ? 'Provider dipilih: ' + provider.name + '. Tekan HACK SLOT untuk mula scan.'
+        : 'Sila pilih provider dulu, lepas tu tekan HACK SLOT untuk mula scan.';
 }
 
 // ==========================================
@@ -272,14 +304,21 @@ function runScanProgress(providerName, onComplete) {
 // SCANNING FLOW
 // ==========================================
 function startScan() {
+    var provider = GAME_DATABASE[currentProvider];
+    var providerSection = document.getElementById('providerSection');
     if (isScanning) return;
+    if (!provider) {
+        updateProviderHint('Sila pilih provider dulu sebelum mula scan.', true);
+        if (providerSection) providerSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+    }
     isScanning = true;
+    updateProviderHint();
     var scanSection = document.getElementById('scanningSection');
     var resultsSection = document.getElementById('resultsSection');
     var gameList = document.getElementById('gameList');
     var top3Section = document.getElementById('top3Section');
-    var pName = GAME_DATABASE[currentProvider] ? GAME_DATABASE[currentProvider].name : currentProvider.toUpperCase();
-
+    var pName = provider.name;
     scanSection.style.display = 'block';
     resultsSection.style.display = 'none';
     gameList.innerHTML = '';

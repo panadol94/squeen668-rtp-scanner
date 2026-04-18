@@ -648,6 +648,18 @@ body::after {
 }
 .provider-card.active .provider-check { display: block; }
 
+.provider-hint {
+    margin: 14px 4px 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-dim);
+    text-align: center;
+}
+
+.provider-hint.error {
+    color: #ff8a80;
+}
+
 /* =============================================
    SCANNING PROGRESS
    ============================================= */
@@ -1654,6 +1666,27 @@ body::after {
     color: var(--accent) !important;
     font-weight: 800 !important;
     text-shadow: 0 0 8px var(--gold-glow);
+}
+
+.center-hack-btn.disabled .hack-btn-inner {
+    opacity: 0.55;
+    box-shadow:
+        0 0 12px rgba(212, 175, 55, 0.16),
+        inset 0 -4px 8px rgba(0, 0, 0, 0.25),
+        inset 0 2px 4px rgba(255, 255, 255, 0.35);
+    animation: none;
+    cursor: not-allowed;
+}
+
+.center-hack-btn.disabled .hack-btn-ring,
+.center-hack-btn.disabled::before,
+.center-hack-btn.disabled::after {
+    display: none;
+}
+
+.center-hack-btn.disabled span {
+    color: var(--text-dim) !important;
+    text-shadow: none;
 }
 
 /* =============================================

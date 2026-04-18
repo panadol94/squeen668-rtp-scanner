@@ -119,12 +119,15 @@
     <section id="deviceIntel" class="device-intel"></section>
 
     <!-- Provider Grid -->
-    <section class="provider-section">
+    <section class="provider-section" id="providerSection">
         <h2 class="section-title">
             <span class="section-icon">🎮</span>
             PILIH PROVIDER
         </h2>
-        <div id="providerGrid" class="provider-grid"></div>
+        <div id="providerGrid" class="provider-grid">
+            <!-- Populated dynamically by JS from 99laju.net data -->
+        </div>
+        <p id="providerHint" class="provider-hint">Sila pilih provider dulu, lepas tu tekan HACK SLOT untuk mula scan.</p>
     </section>
 
     <!-- Scanning Section (Clean Progress) -->
@@ -150,7 +153,8 @@
     </section>
 
     <!-- Results Section -->
-    <section id="resultsSection" class="results-section">
+    <section id="resultsSection" class="results-section" style="display:none;">
+        <!-- Top 3 Podium -->
         <div id="top3Section" class="top3-section"></div>
         <div class="controls-bar">
             <div class="filter-controls">
@@ -198,12 +202,12 @@
             </svg>
             <span>Tips</span>
         </a>
-        <a href="#" class="nav-item center-hack-btn" onclick="startScan()">
+        <a href="#" id="scanButton" class="nav-item center-hack-btn disabled" onclick="startScan()">
             <span class="hack-btn-ring" aria-hidden="true"></span>
             <div class="hack-btn-inner">
                 <svg viewBox="0 0 24 24" fill="#1A0A2E" stroke="#1A0A2E" stroke-width="1.6" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             </div>
-            <span>SCAN SLOT</span>
+            <span id="scanButtonLabel">PILIH PROVIDER</span>
         </a>
         <a href="#" class="nav-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
