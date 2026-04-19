@@ -2393,7 +2393,7 @@ body.scan-modal-open { overflow: hidden; }
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     background: transparent;
     border: 0;
     border-radius: 0;
@@ -2500,20 +2500,33 @@ body.scan-modal-open { overflow: hidden; }
 
 .bottom-nav .nav-item > svg { width: 22px; height: 22px; }
 
-/* Center scan button — winners-style red CTA disc (floats in round nav cutout) */
+/* Center scan button — winners-style red CTA disc (floats in round nav cutout).
+   Flex item stays slim (44px) to match side items; disc and label are
+   absolutely positioned so they visually pop above the nav without
+   stretching the nav height. */
 .center-hack-btn {
     position: relative;
-    top: -36px;
+    top: 0;
     flex: 1.2;
-    gap: 2px;
+    gap: 0;
     z-index: 3;
+    min-height: 44px;
+    height: 44px;
+    overflow: visible;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .center-hack-btn .hack-btn-inner {
-    position: relative;
+    position: absolute;
+    left: 50%;
+    top: -36px;
+    transform: translateX(-50%);
     width: 72px;
     height: 72px;
-    margin-bottom: 2px;
+    margin: 0;
     background: radial-gradient(circle at 30% 25%, #c51f1f 0%, #950606 55%, #6e0404 100%);
     border: 3px solid var(--surface-white);
     border-radius: 50%;
@@ -2525,6 +2538,14 @@ body.scan-modal-open { overflow: hidden; }
         0 6px 18px rgba(149, 6, 6, 0.50),
         0 0 24px rgba(255, 140, 100, 0.40);
     animation: discGlitch 4.2s steps(1, end) infinite;
+}
+
+.center-hack-btn > #scanButtonLabel {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 40px;
+    white-space: nowrap;
 }
 
 @keyframes discGlitch {
@@ -3151,12 +3172,14 @@ select:focus-visible,
 
     .bottom-nav > a.center-hack-btn {
         flex: 1.2;
-        top: -36px;
+        top: 0;
+        height: 44px;
     }
 
     .bottom-nav > a.center-hack-btn .hack-btn-inner {
         width: 72px;
         height: 72px;
+        top: -36px;
         border: 3px solid var(--surface-white);
         box-shadow:
             0 6px 18px rgba(149, 6, 6, 0.50),
@@ -3170,8 +3193,8 @@ select:focus-visible,
         font-size: 10px;
         letter-spacing: 0.2px;
         color: var(--brand-red);
-        margin-top: 6px;
         font-weight: 800;
+        top: 40px;
     }
 }
 
