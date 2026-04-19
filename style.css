@@ -5103,3 +5103,22 @@ body > .bottom-nav > .nav-item span {
     text-overflow: ellipsis !important;
     max-width: 98% !important;
 }
+
+/* =============================================
+   FINAL EMERGENCY NAV FIX - AGGRESSIVE WIDTH
+   ============================================= */
+html body .page-shell .bottom-nav,
+body .bottom-nav {
+    width: 382px !important;
+    max-width: calc(100vw - 8px) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    padding: 6px 2px !important;
+}
+html body .page-shell .bottom-nav > *,
+body .bottom-nav > * {
+    width: 76px !important;
+    min-width: 76px !important;
+    max-width: 76px !important;
+    flex: none !important;
+}
