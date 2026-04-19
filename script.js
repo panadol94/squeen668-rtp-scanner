@@ -638,59 +638,204 @@ window.getFallbackImage = function(gameName) {
 };
 
 // ==========================================
-// SCAN PROGRESS (clean, professional)
+// SCAN PROGRESS (hacker HUD flow: target-lock -> typewriter -> glitch)
 // ==========================================
+var _hudTicker = null;
+function randHex(len) {
+    var c = '0123456789ABCDEF';
+    var out = '';
+    for (var i = 0; i < len; i++) out += c.charAt(Math.floor(Math.random() * 16));
+    return out;
+}
+function randIp() {
+    return (10 + Math.floor(Math.random() * 245)) + '.' +
+           Math.floor(Math.random() * 256) + '.' +
+           Math.floor(Math.random() * 256) + '.' +
+           Math.floor(Math.random() * 256);
+}
+function randMac() {
+    var parts = [];
+    for (var i = 0; i < 6; i++) parts.push(randHex(2));
+    return parts.join(':');
+}
+function startHudTicker() {
+    stopHudTicker();
+    var panel = document.getElementById('scanPanelRoot');
+    if (!panel) return;
+    var ipEl   = panel.querySelector('[data-hud="ip"]');
+    var macEl  = panel.querySelector('[data-hud="mac"]');
+    var encrEl = panel.querySelector('[data-hud="encr"]');
+    var latEl  = panel.querySelector('[data-hud="lat"]');
+    var encrPool = ['AES-256', 'RSA-4096', 'SHA-512', 'XCHACHA20', 'KYBER-1024'];
+    function tick() {
+        if (ipEl)   ipEl.textContent   = randIp();
+        if (macEl)  macEl.textContent  = randMac();
+        if (encrEl) encrEl.textContent = encrPool[Math.floor(Math.random() * encrPool.length)];
+        if (latEl)  latEl.textContent  = (6 + Math.floor(Math.random() * 48)) + ' ms';
+    }
+    tick();
+    _hudTicker = setInterval(tick, 420);
+}
+function stopHudTicker() {
+    if (_hudTicker) { clearInterval(_hudTicker); _hudTicker = null; }
+}
+
+function typeInto(el, text, perChar, done) {
+    var i = 0;
+    el.textContent = '';
+    var cursor = document.createElement('span');
+    cursor.className = 'tl-cursor';
+    el.appendChild(cursor);
+    (function step() {
+        if (i >= text.length) {
+            if (typeof done === 'function') done();
+            return;
+        }
+        var ch = document.createTextNode(text.charAt(i++));
+        el.insertBefore(ch, cursor);
+        setTimeout(step, perChar + (Math.random() * 20 - 10));
+    })();
+}
+
+function runTargetLock(providerName, onDone) {
+    var overlay = document.getElementById('targetLockOverlay');
+    var textEl  = document.getElementById('targetLockText');
+    if (!overlay || !textEl) { onDone(); return; }
+    overlay.classList.remove('is-closing');
+    overlay.classList.add('is-active');
+    textEl.textContent = '';
+    var phase1 = '> LOCKING TARGET';
+    typeInto(textEl, phase1, 40, function() {
+        // dots
+        var dots = 0;
+        var dotInt = setInterval(function() {
+            textEl.firstChild && (textEl.childNodes[textEl.childNodes.length - 2]); // noop
+            var cursor = textEl.querySelector('.tl-cursor');
+            if (cursor) {
+                var dot = document.createTextNode('.');
+                textEl.insertBefore(dot, cursor);
+            }
+            if (++dots >= 3) {
+                clearInterval(dotInt);
+                setTimeout(function() {
+                    // acquired line
+                    var br = document.createElement('br');
+                    textEl.insertBefore(br, textEl.querySelector('.tl-cursor'));
+                    var ack = document.createElement('span');
+                    ack.className = 'tl-acquired';
+                    textEl.insertBefore(ack, textEl.querySelector('.tl-cursor'));
+                    typeInto(ack, '✓ ACQUIRED: ' + providerName, 26, function() {
+                        setTimeout(function() {
+                            overlay.classList.add('is-closing');
+                            setTimeout(function() {
+                                overlay.classList.remove('is-active', 'is-closing');
+                                onDone();
+                            }, 260);
+                        }, 500);
+                    });
+                }, 220);
+            }
+        }, 220);
+    });
+}
+
+function typeLogLine(lineEl, text, perChar, onDone) {
+    var i = 0;
+    lineEl.textContent = '';
+    var cursor = document.createElement('span');
+    cursor.className = 'log-cursor';
+    lineEl.appendChild(cursor);
+    (function step() {
+        if (i >= text.length) {
+            cursor.remove();
+            if (typeof onDone === 'function') onDone();
+            return;
+        }
+        var ch = document.createTextNode(text.charAt(i++));
+        lineEl.insertBefore(ch, cursor);
+        setTimeout(step, perChar);
+    })();
+}
+
 function runScanProgress(providerName, onComplete) {
-    var logBody = document.getElementById('terminalLog');
+    var logBody    = document.getElementById('terminalLog');
     var progressBar = document.getElementById('scanProgressBar');
-    var percentEl = document.getElementById('scanPanelPercent');
-    var titleEl = document.getElementById('scanPanelTitle');
+    var percentEl  = document.getElementById('scanPanelPercent');
+    var titleEl    = document.getElementById('scanPanelTitle');
+    var panel      = document.getElementById('scanPanelRoot');
     if (!logBody) { onComplete(); return; }
 
-    titleEl.textContent = 'Scanning ' + providerName + '...';
+    if (titleEl) titleEl.textContent = 'Scanning ' + providerName + '...';
     var radarFill = document.getElementById('scanRadarFill');
-    var radarCircumference = 2 * Math.PI * 15; // r=15 → ~94.25
+    var radarCircumference = 2 * Math.PI * 15;
     if (radarFill) {
         radarFill.setAttribute('stroke-dasharray', radarCircumference);
         radarFill.setAttribute('stroke-dashoffset', radarCircumference);
     }
+
+    // Reset panel state
+    if (panel) panel.classList.remove('is-glitching');
+    logBody.innerHTML = '';
+    startHudTicker();
+
     var gameCount = Math.floor(Math.random() * 10 + 15);
     var lines = [
-        { text: 'Initializing scanner...', type: 'info', delay: 300 },
-        { text: 'Connecting to ' + providerName + ' server...', type: 'normal', delay: 500 },
-        { text: 'Connection established', type: 'success', delay: 400 },
-        { text: 'Authenticating session...', type: 'normal', delay: 500 },
-        { text: 'Session verified ✓', type: 'success', delay: 300 },
-        { text: 'Target: ' + providerName + ' • SLOTPATCHER', type: 'info', delay: 400 },
-        { text: 'Reading RTP data block...', type: 'normal', delay: 500 },
-        { text: 'Accessing slot tables...', type: 'normal', delay: 400 },
-        { text: gameCount + ' games found', type: 'success', delay: 500 },
-        { text: 'Decrypting RTP values...', type: 'normal', delay: 600 },
-        { text: 'Mapping RTP distributions...', type: 'normal', delay: 400 },
-        { text: 'Cross-referencing hot patterns...', type: 'normal', delay: 500 },
-        { text: 'Running probability analysis...', type: 'normal', delay: 400 },
-        { text: 'Compiling results ██████████ 100%', type: 'info', delay: 300 },
-        { text: 'Scan complete — ' + gameCount + ' games analyzed ✓', type: 'success', delay: 200 },
+        { text: '> Initializing scanner module...', type: 'info' },
+        { text: '> Connecting to ' + providerName + ' server...', type: 'normal' },
+        { text: '[ OK ] Connection established', type: 'success' },
+        { text: '> Authenticating session token...', type: 'normal' },
+        { text: '[ OK ] Session verified', type: 'success' },
+        { text: '> Target: ' + providerName + ' // SLOTPATCHER', type: 'info' },
+        { text: '> Bypassing RTP read lock...', type: 'normal' },
+        { text: '> Accessing slot tables [0x' + randHex(8) + ']', type: 'normal' },
+        { text: '[ + ] ' + gameCount + ' games discovered', type: 'success' },
+        { text: '> Decrypting RTP values...', type: 'normal' },
+        { text: '> Mapping RTP distribution matrix...', type: 'normal' },
+        { text: '> Cross-referencing hot patterns...', type: 'normal' },
+        { text: '> Running probability analysis...', type: 'normal' },
+        { text: '> Compiling results [##########] 100%', type: 'info' },
+        { text: '[ DONE ] Scan complete — ' + gameCount + ' games analyzed', type: 'success' }
     ];
 
-    logBody.innerHTML = '';
-    var cumDelay = 0;
-    lines.forEach(function(line, i) {
-        cumDelay += line.delay;
-        setTimeout(function() {
+    function runLines() {
+        var i = 0;
+        function nextLine() {
+            if (i >= lines.length) {
+                // E: glitch reveal on completion
+                if (panel) {
+                    panel.classList.add('is-glitching');
+                    setTimeout(function() {
+                        panel.classList.remove('is-glitching');
+                        stopHudTicker();
+                        onComplete();
+                    }, 480);
+                } else {
+                    stopHudTicker();
+                    onComplete();
+                }
+                return;
+            }
+            var line = lines[i];
             var div = document.createElement('div');
             div.className = 'log-line log-' + line.type;
             if (i === lines.length - 1) div.classList.add('log-latest');
-            div.textContent = line.text;
             logBody.appendChild(div);
-            logBody.scrollTop = logBody.scrollHeight;
-            var pct = Math.round(((i + 1) / lines.length) * 100);
-            if (progressBar) progressBar.style.width = pct + '%';
-            if (percentEl) percentEl.textContent = pct + '%';
-            if (radarFill) radarFill.setAttribute('stroke-dashoffset', radarCircumference * (1 - pct / 100));
-            if (i === lines.length - 1) setTimeout(onComplete, 500);
-        }, cumDelay);
-    });
+            var perChar = Math.max(6, Math.round(120 / Math.max(line.text.length, 1) * 3));
+            typeLogLine(div, line.text, perChar, function() {
+                logBody.scrollTop = logBody.scrollHeight;
+                var pct = Math.round(((i + 1) / lines.length) * 100);
+                if (progressBar) progressBar.style.width = pct + '%';
+                if (percentEl) percentEl.textContent = pct + '%';
+                if (radarFill) radarFill.setAttribute('stroke-dashoffset', radarCircumference * (1 - pct / 100));
+                i++;
+                setTimeout(nextLine, 120 + Math.random() * 140);
+            });
+        }
+        nextLine();
+    }
+
+    // C: target lock first, then lines
+    runTargetLock(providerName, runLines);
 }
 
 // ==========================================

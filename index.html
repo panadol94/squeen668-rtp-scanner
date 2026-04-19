@@ -201,9 +201,32 @@
         </div>
     </section>
 
-    <!-- Scanning Section (Clean Progress) -->
+    <!-- Scanning Section (Hacker-HUD) -->
     <section id="scanningSection" class="scanning-section" style="display:none;" data-aos="fade-up">
-        <div class="scan-panel">
+        <div class="scan-panel" id="scanPanelRoot">
+            <!-- Tech HUD corners (D) -->
+            <div class="hud-corners" aria-hidden="true">
+                <span class="hud-tag hud-tl">IP <b data-hud="ip">---.---.---.---</b></span>
+                <span class="hud-tag hud-tr">ENCR <b data-hud="encr">AES-256</b></span>
+                <span class="hud-tag hud-bl">MAC <b data-hud="mac">--:--:--:--:--:--</b></span>
+                <span class="hud-tag hud-br">LAT <b data-hud="lat">-- ms</b></span>
+                <span class="hud-corner hc-tl"></span>
+                <span class="hud-corner hc-tr"></span>
+                <span class="hud-corner hc-bl"></span>
+                <span class="hud-corner hc-br"></span>
+            </div>
+            <!-- Target lock overlay (C) -->
+            <div class="target-lock-overlay" id="targetLockOverlay" aria-hidden="true">
+                <div class="target-reticle">
+                    <span class="tl-corner tl-tl"></span>
+                    <span class="tl-corner tl-tr"></span>
+                    <span class="tl-corner tl-bl"></span>
+                    <span class="tl-corner tl-br"></span>
+                    <span class="tl-cross tl-cross-h"></span>
+                    <span class="tl-cross tl-cross-v"></span>
+                </div>
+                <div class="target-lock-text" id="targetLockText"></div>
+            </div>
             <div class="scan-panel-header">
                 <div class="scan-radar" aria-hidden="true">
                     <svg viewBox="0 0 36 36">
