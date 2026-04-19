@@ -323,7 +323,24 @@
         </a>
         <a href="#" id="scanButton" class="nav-item center-hack-btn disabled" onclick="startScan()" role="button" aria-label="Mula scan">
             <div class="hack-btn-inner" aria-hidden="true">
-                <span class="scan-medallion-mark">SP</span>
+                <svg class="scan-hack-svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <clipPath id="spScanClip"><circle cx="20" cy="20" r="19"/></clipPath>
+                    </defs>
+                    <g clip-path="url(#spScanClip)">
+                        <text class="sp-binary sp-bin-top" x="20" y="8" text-anchor="middle">01010111</text>
+                        <text class="sp-binary sp-bin-bot" x="20" y="36" text-anchor="middle">10110101</text>
+                        <line class="sp-scanline" x1="2" y1="20" x2="38" y2="20"/>
+                        <g class="sp-reticle">
+                            <path d="M6 13 V6 H13"/>
+                            <path d="M27 6 H34 V13"/>
+                            <path d="M34 27 V34 H27"/>
+                            <path d="M13 34 H6 V27"/>
+                        </g>
+                        <circle class="sp-pulse" cx="20" cy="20" r="3"/>
+                        <circle class="sp-blip" cx="20" cy="20" r="1.6"/>
+                    </g>
+                </svg>
             </div>
             <span id="scanButtonLabel">SCAN</span>
         </a>

@@ -2302,6 +2302,94 @@ body.scan-modal-open { overflow: hidden; }
     animation: none;
 }
 
+/* Hack-scan SVG inside the SCAN disc */
+.scan-hack-svg {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+.scan-hack-svg .sp-binary {
+    fill: rgba(255, 255, 255, 0.55);
+    font-family: 'SF Mono', 'JetBrains Mono', Consolas, monospace;
+    font-size: 4px;
+    letter-spacing: -0.15px;
+    animation: spBinaryFlicker 0.55s steps(2) infinite;
+}
+.scan-hack-svg .sp-bin-bot { animation-delay: 0.25s; }
+
+.scan-hack-svg .sp-scanline {
+    stroke: rgba(255, 255, 255, 0.95);
+    stroke-width: 0.7;
+    filter: drop-shadow(0 0 1.6px rgba(255, 255, 255, 0.85));
+    transform-origin: center;
+    animation: spScanSweep 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+.scan-hack-svg .sp-reticle path {
+    stroke: rgba(255, 255, 255, 0.85);
+    stroke-width: 1;
+    fill: none;
+    stroke-linecap: round;
+}
+.scan-hack-svg .sp-reticle {
+    transform-origin: center;
+    animation: spReticlePulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 0.8px rgba(255, 255, 255, 0.6));
+}
+
+.scan-hack-svg .sp-blip {
+    fill: #fff;
+    transform-origin: center;
+    animation: spBlip 1.2s ease-in-out infinite;
+}
+
+.scan-hack-svg .sp-pulse {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.9);
+    stroke-width: 0.6;
+    transform-origin: center;
+    animation: spPulse 1.8s ease-out infinite;
+}
+
+@keyframes spScanSweep {
+    0%   { transform: translateY(-12px); opacity: 0.1; }
+    45%  { opacity: 0.95; }
+    50%  { transform: translateY(12px); opacity: 1; }
+    55%  { opacity: 0.95; }
+    100% { transform: translateY(-12px); opacity: 0.1; }
+}
+@keyframes spBlip {
+    0%, 100% { transform: scale(0.7); opacity: 0.55; }
+    50%      { transform: scale(1.3); opacity: 1; }
+}
+@keyframes spPulse {
+    0%   { transform: scale(0.4); opacity: 0.95; }
+    100% { transform: scale(3.2); opacity: 0; }
+}
+@keyframes spReticlePulse {
+    0%, 100% { opacity: 0.65; transform: scale(1); }
+    50%      { opacity: 1;    transform: scale(1.04); }
+}
+@keyframes spBinaryFlicker {
+    0%, 50%  { opacity: 0.4; }
+    51%, 100% { opacity: 0.85; }
+}
+
+/* Disabled — dim + slow */
+.center-hack-btn.disabled .scan-hack-svg { opacity: 0.55; }
+.center-hack-btn.disabled .sp-scanline { animation-duration: 3.5s; }
+.center-hack-btn.disabled .sp-blip,
+.center-hack-btn.disabled .sp-pulse { animation-duration: 3s; }
+
+/* Scanning active — accelerated */
+body.scanning-active .sp-scanline { animation-duration: 0.75s; }
+body.scanning-active .sp-blip     { animation-duration: 0.45s; }
+body.scanning-active .sp-pulse    { animation-duration: 0.9s;  }
+body.scanning-active .sp-binary   { animation-duration: 0.18s; }
+body.scanning-active .sp-reticle  { animation-duration: 0.7s;  }
+
 .center-hack-btn:active .hack-btn-inner {
     animation: scanBoot 0.5s ease-out;
 }
