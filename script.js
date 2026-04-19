@@ -1261,13 +1261,14 @@ function initBottomNav() {
                 openProviderModal();
                 return;
             }
-            if (href && href !== '#') {
+            if (!href || href === '#') {
                 e.preventDefault();
-                var target = document.querySelector(href);
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                e.preventDefault();
+                return;
             }
+            if (href.charAt(0) !== '#') return;
+            e.preventDefault();
+            var target = document.querySelector(href);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
     updateBottomNavVisibility();
