@@ -5195,3 +5195,61 @@ body > nav.bottom-nav {
         max-width: 95% !important;
     }
 }
+
+
+/* =============================================
+   ☢️ NUCLEAR OVERRIDE - FORCE 5 NAV ITEMS
+   ============================================= */
+@media (max-width: 480px) {
+    html body .bottom-nav,
+    body .bottom-nav {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        left: 2px !important;
+        right: 2px !important;
+        width: calc(100% - 4px) !important;
+        bottom: 2px !important;
+        padding: 4px 0 !important;
+        border-radius: 12px !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+    }
+    
+    html body .bottom-nav > .nav-item,
+    body .bottom-nav > .nav-item {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        flex: 0 0 18% !important;
+        width: 18% !important;
+        min-width: 18% !important;
+        max-width: 18% !important;
+        padding: 4px 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+    }
+    
+    html body .bottom-nav > .center-hack-btn,
+    body .bottom-nav > .center-hack-btn {
+        flex: 0 0 22% !important;
+        width: 22% !important;
+        min-width: 22% !important;
+        max-width: 22% !important;
+    }
+    
+    html body .bottom-nav > .nav-item span,
+    body .bottom-nav > .nav-item span {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-size: 5.5px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 100% !important;
+    }
+}
