@@ -3420,9 +3420,9 @@ select:focus-visible,
 /* E: Telemetry strip */
 .telemetry-strip {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 4px;
-    padding: 10px 12px;
+    padding: 10px 8px;
     background: var(--surface-cream);
     border-bottom: 1px solid rgba(149, 6, 6, 0.12);
 }
@@ -3448,12 +3448,13 @@ select:focus-visible,
 }
 .tel-value {
     font-family: 'SF Mono', 'JetBrains Mono', Consolas, monospace;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--brand-red);
     margin-top: 2px;
-    letter-spacing: 0.02em;
+    letter-spacing: 0;
     transition: transform 0.2s ease;
+    white-space: nowrap;
 }
 .tel-value.just-ticked {
     animation: telTick 0.3s ease-out;

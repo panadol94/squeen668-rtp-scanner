@@ -1278,28 +1278,41 @@ console.log('%c Slotpatcher Live Scanner ', 'background: linear-gradient(135deg,
     // E: Telemetry counters
     onReady(function telemetry() {
         var scansEl = document.getElementById('telScans');
-        var poolEl = document.getElementById('telPool');
+        var winEl   = document.getElementById('telWin');
+        var usersEl = document.getElementById('telUsers');
         var nodesEl = document.getElementById('telNodes');
         if (!scansEl) return;
         var scans = 47200 + Math.floor(Math.random() * 800);
-        var pool = 12700000 + Math.floor(Math.random() * 400000);
+        var totalWin = 8400000 + Math.floor(Math.random() * 600000);
+        var users = 12800 + Math.floor(Math.random() * 400);
         var totalNodes = 25;
 
         function fmtN(n) { return n.toLocaleString('en-US'); }
-        function fmtPool(n) { return 'RM ' + (n / 1000000).toFixed(2) + 'M'; }
+        function fmtRM(n) {
+            if (n >= 1000000) return 'RM ' + (n / 1000000).toFixed(2) + 'M';
+            if (n >= 1000)    return 'RM ' + (n / 1000).toFixed(1) + 'K';
+            return 'RM ' + n;
+        }
+        function fmtUsers(n) {
+            if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+            return String(n);
+        }
         function bump(el) {
+            if (!el) return;
             el.classList.remove('just-ticked');
             void el.offsetWidth;
             el.classList.add('just-ticked');
         }
         function tick(first) {
-            scans += first ? 0 : (1 + Math.floor(Math.random() * 3));
-            pool += first ? 0 : Math.floor(Math.random() * 2400);
+            scans    += first ? 0 : (1 + Math.floor(Math.random() * 3));
+            totalWin += first ? 0 : Math.floor(Math.random() * 1800);
+            users    += first ? 0 : (Math.random() < 0.35 ? 1 : 0);
             var nodes = 22 + Math.floor(Math.random() * 4);
             scansEl.textContent = fmtN(scans);
-            poolEl.textContent = fmtPool(pool);
-            nodesEl.textContent = nodes + '/' + totalNodes;
-            if (!first) { bump(scansEl); bump(poolEl); }
+            if (winEl)   winEl.textContent   = fmtRM(totalWin);
+            if (usersEl) usersEl.textContent = fmtUsers(users);
+            if (nodesEl) nodesEl.textContent = nodes + '/' + totalNodes;
+            if (!first) { bump(scansEl); bump(winEl); bump(usersEl); }
         }
         tick(true);
         setInterval(tick, 3200);
