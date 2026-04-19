@@ -1729,18 +1729,19 @@ body.scan-modal-open {
    ============================================= */
 .bottom-nav {
     position: fixed;
-    left: 14px;
-    right: 14px;
+    left: 8px;
+    right: 8px;
     bottom: calc(14px + env(safe-area-inset-bottom, 0px));
     z-index: 200;
-    display: flex;
-    justify-content: space-evenly;
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    justify-content: normal;
     align-items: center;
     background: rgba(17, 20, 13, 0.96);
     border: 1px solid rgba(240, 181, 72, 0.10);
     border-radius: 22px;
     margin: 0;
-    padding: 8px 6px 14px;
+    padding: 8px 4px 14px;
     min-height: auto;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -1760,7 +1761,9 @@ body.scan-modal-open {
 }
 
 .nav-item {
-    flex: 1;
+    flex: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1768,8 +1771,8 @@ body.scan-modal-open {
     gap: 4px;
     color: var(--text-dim);
     text-decoration: none;
-    font-size: 9px;
-    padding: 8px 8px 6px;
+    font-size: 8px;
+    padding: 8px 2px 6px;
     border-radius: 16px;
     transition: color 0.25s, background 0.25s, transform 0.25s;
     position: relative;
