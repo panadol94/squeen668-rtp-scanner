@@ -5204,3 +5204,9 @@ body > nav.bottom-nav {
     .nav-item { flex: 1 1 20%; min-width: 0; }
     .nav-item span { display: block; font-size: 6.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 }
+
+/* FORCE SHOW ALL 5 NAV ITEMS */
+nav.bottom-nav { display: flex !important; justify-content: space-between !important; width: calc(100% - 8px) !important; left: 4px !important; right: 4px !important; }
+nav.bottom-nav > a.nav-item { display: flex !important; visibility: visible !important; opacity: 1 !important; flex: 1 1 20% !important; min-width: 0 !important; max-width: 20% !important; }
+nav.bottom-nav > a.nav-item:nth-child(5) { display: flex !important; visibility: visible !important; opacity: 1 !important; }
+nav.bottom-nav > a.nav-item span { display: block !important; visibility: visible !important; }
