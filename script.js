@@ -680,10 +680,14 @@ function startScan() {
 // ==========================================
 // GENERATE RTP (time-seeded)
 // ==========================================
+function isNonSlotGame(rawName) {
+    return /roulette|fish|fishin/i.test(String(rawName || ''));
+}
+
 function generateResults(providerKey) {
     var provider = GAME_DATABASE[providerKey];
     if (!provider) return [];
-    var allGames = provider.games;
+    var allGames = provider.games.filter(function(g) { return !isNonSlotGame(g.name); });
     var seed = getTimeSeed(providerKey, SCANNER_CONFIG.seedInterval);
     var rand = seededRandom(seed);
     var cfg = SCANNER_CONFIG;
