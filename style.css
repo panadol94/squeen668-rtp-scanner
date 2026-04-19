@@ -197,8 +197,15 @@ body {
     font-family: var(--font-display);
     font-size: 13px;
     font-weight: 700;
-    color: var(--ink-primary);
+    color: #fff;
     letter-spacing: -0.01em;
+    text-shadow:
+        1px 1px 0 rgba(100, 0, 0, 0.9),
+        2px 2px 0 rgba(80, 0, 0, 0.8),
+        3px 3px 0 rgba(60, 0, 0, 0.7),
+        4px 4px 8px rgba(0, 0, 0, 0.5);
+    transform: perspective(300px) rotateX(2deg);
+    transform-origin: center bottom;
 }
 
 .brand-tagline {
