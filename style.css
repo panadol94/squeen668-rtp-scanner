@@ -2408,10 +2408,10 @@ body.scan-modal-open { overflow: hidden; }
 .bottom-nav::before {
     content: '';
     position: absolute;
-    inset: -34px 0 0 0;
+    inset: -26px 0 0 0;
     background: var(--surface-white);
-    -webkit-mask: radial-gradient(circle 44px at 50% 34px, transparent 42px, black 44px);
-            mask: radial-gradient(circle 44px at 50% 34px, transparent 42px, black 44px);
+    -webkit-mask: radial-gradient(circle 40px at 50% 26px, transparent 38px, black 40px);
+            mask: radial-gradient(circle 40px at 50% 26px, transparent 38px, black 40px);
     z-index: 0;
     pointer-events: none;
 }
@@ -2501,16 +2501,16 @@ body.scan-modal-open { overflow: hidden; }
 /* Center scan button — winners-style red CTA disc (floats in round nav cutout) */
 .center-hack-btn {
     position: relative;
-    top: -30px;
-    flex: 1.15;
+    top: -36px;
+    flex: 1.2;
     gap: 2px;
     z-index: 3;
 }
 
 .center-hack-btn .hack-btn-inner {
     position: relative;
-    width: 60px;
-    height: 60px;
+    width: 72px;
+    height: 72px;
     margin-bottom: 2px;
     background: radial-gradient(circle at 30% 25%, #c51f1f 0%, #950606 55%, #6e0404 100%);
     border: 3px solid var(--surface-white);
@@ -3148,13 +3148,13 @@ select:focus-visible,
     .bottom-nav > a.nav-item > svg .icon-accent { stroke: currentColor; }
 
     .bottom-nav > a.center-hack-btn {
-        flex: 1.15;
-        top: -30px;
+        flex: 1.2;
+        top: -36px;
     }
 
     .bottom-nav > a.center-hack-btn .hack-btn-inner {
-        width: 60px;
-        height: 60px;
+        width: 72px;
+        height: 72px;
         border: 3px solid var(--surface-white);
         box-shadow:
             0 6px 18px rgba(149, 6, 6, 0.50),
