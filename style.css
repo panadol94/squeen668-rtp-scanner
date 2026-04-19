@@ -2534,6 +2534,12 @@ body.scan-modal-open { overflow: hidden; }
     display: flex;
     align-items: center;
     justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
 }
 
 .center-hack-btn .hack-btn-inner {
