@@ -13,7 +13,9 @@ describe('slotpatcher live scan experience', () => {
     cy.get('#scanningSection [data-scan-metric]').should('have.length.at.least', 4);
     cy.contains('#scanningSection', 'ACTIVE PIPELINE').should('exist');
     cy.contains('#scanningSection', 'EVENT STREAM').should('exist');
+    cy.get('#scanFinalReveal', { timeout: 15000 }).should('be.visible');
+    cy.contains('#scanFinalReveal', 'Live result ready').should('exist');
 
-    cy.get('#resultsSection', { timeout: 20000 }).should('be.visible');
+    cy.get('#resultsSection', { timeout: 22000 }).should('be.visible');
   });
 });

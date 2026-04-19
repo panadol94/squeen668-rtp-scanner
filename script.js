@@ -656,9 +656,48 @@ function updateScanStageCopy(stageKey, detailText) {
     if (detail && detailText) detail.textContent = detailText;
 }
 
+function resetScanFinalReveal() {
+    var panel = document.getElementById('scanPanelRoot');
+    var reveal = document.getElementById('scanFinalReveal');
+    var badge = document.getElementById('scanFinalBadge');
+    var title = document.getElementById('scanFinalTitle');
+    var subtitle = document.getElementById('scanFinalSubtitle');
+    var titles = document.getElementById('scanFinalTitles');
+    var range = document.getElementById('scanFinalRange');
+    var confidence = document.getElementById('scanFinalConfidence');
+    if (panel) panel.classList.remove('is-final-ready');
+    if (reveal) reveal.classList.remove('is-visible');
+    if (badge) badge.textContent = 'Live result ready';
+    if (title) title.textContent = 'Provider ready';
+    if (subtitle) subtitle.textContent = 'Launching live board...';
+    if (titles) titles.textContent = '0 titles';
+    if (range) range.textContent = '-- RTP';
+    if (confidence) confidence.textContent = '0% confidence';
+}
+
+function showScanFinalReveal(scanData) {
+    var panel = document.getElementById('scanPanelRoot');
+    var reveal = document.getElementById('scanFinalReveal');
+    var title = document.getElementById('scanFinalTitle');
+    var subtitle = document.getElementById('scanFinalSubtitle');
+    var titles = document.getElementById('scanFinalTitles');
+    var range = document.getElementById('scanFinalRange');
+    var confidence = document.getElementById('scanFinalConfidence');
+    var badge = document.getElementById('scanFinalBadge');
+    if (title) title.textContent = scanData.providerName + ' report ready';
+    if (subtitle) subtitle.textContent = 'Live board locked with final RTP signal and confidence.';
+    if (titles) titles.textContent = scanData.totalTitles + ' titles indexed';
+    if (range) range.textContent = scanData.signalBandMin + '–' + scanData.signalBandMax + '% RTP';
+    if (confidence) confidence.textContent = scanData.confidence + '% confidence';
+    if (badge) badge.textContent = 'Live result ready';
+    if (panel) panel.classList.add('is-final-ready');
+    if (reveal) reveal.classList.add('is-visible');
+}
+
 function resetScanConsole(scanData) {
     var logBody = document.getElementById('terminalLog');
     if (logBody) logBody.innerHTML = '';
+    resetScanFinalReveal();
     var logCount = document.getElementById('scanLogCount');
     if (logCount) logCount.textContent = '0 events';
     var stageMeta = document.getElementById('scanProgressMeta');
@@ -879,6 +918,11 @@ function runScanProgress(scanData, onComplete) {
                 trackScanTimer(setTimeout(function() {
                     appendScanEvent('Live report assembled • ' + scanData.totalTitles + ' titles ready.', 'success');
                     if (detailEl) detailEl.textContent = scanData.providerName + ' • ' + scanData.totalTitles + ' titles • ' + scanData.confidence + '% confidence';
+                }, 420));
+                trackScanTimer(setTimeout(function() {
+                    showScanFinalReveal(scanData);
+                    appendScanEvent('Live result ready • launching board.', 'latest');
+                    updateScanStageCopy('report', 'Final board locked and ready for reveal');
                 }, 720));
             }
         }
@@ -889,7 +933,7 @@ function runScanProgress(scanData, onComplete) {
             trackScanTimer(setTimeout(function() {
                 clearScanRuntime();
                 onComplete();
-            }, 520));
+            }, 900));
             return;
         }
 
