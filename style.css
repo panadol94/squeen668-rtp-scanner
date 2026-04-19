@@ -5122,3 +5122,32 @@ body.provider-modal-open {
     .bottom-nav { position: fixed !important; left: 8px !important; right: 8px !important; width: auto !important; transform: none !important; }
     .banner-carousel, .hero-carousel { width: calc(100% - 16px) !important; margin-left: 8px !important; margin-right: 8px !important; }
 }
+
+/* =============================================
+   ULTRA EMERGENCY NAV WIDTH FIX
+   ============================================= */
+@media (max-width: 480px) {
+    .bottom-nav {
+        left: 4px !important;
+        right: 4px !important;
+        width: calc(100% - 8px) !important;
+        max-width: calc(100vw - 8px) !important;
+        min-width: auto !important;
+        padding: 6px 2px !important;
+        gap: 2px !important;
+    }
+    .nav-item {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        padding: 4px 1px !important;
+        font-size: 7px !important;
+    }
+    .nav-item > svg {
+        width: 22px !important;
+        height: 22px !important;
+    }
+    .center-hack-btn {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+    }
+}
