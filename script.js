@@ -115,6 +115,8 @@ function renderGamesEmpty(message) {
 // ==========================================
 document.addEventListener('DOMContentLoaded', function() {
     setFlowStep('provider');
+    initProviderModal();
+    updatePickerTrigger();
     buildProviderGrid();
     buildFeaturedProviders();
     initFilterTabs();
@@ -279,7 +281,49 @@ function selectProvider(key) {
     setFlowStep('provider');
     updateScanButtonState();
     updateProviderHint();
+    updatePickerTrigger();
     updateBottomNavVisibility();
+    closeProviderModal();
+}
+
+function updatePickerTrigger() {
+    var trigger = document.getElementById('providerPickerBtn');
+    var value = document.getElementById('providerPickerValue');
+    var provider = GAME_DATABASE[currentProvider];
+    if (value) {
+        value.textContent = provider ? provider.name : 'Tap untuk pilih provider casino';
+    }
+    if (trigger) {
+        trigger.classList.toggle('is-selected', !!provider);
+    }
+}
+
+function openProviderModal() {
+    var modal = document.getElementById('providerSection');
+    if (!modal) return;
+    modal.hidden = false;
+    void modal.offsetWidth;
+    modal.classList.add('is-open');
+    document.body.classList.add('provider-modal-open');
+}
+
+function closeProviderModal() {
+    var modal = document.getElementById('providerSection');
+    if (!modal || modal.hidden) return;
+    modal.classList.remove('is-open');
+    document.body.classList.remove('provider-modal-open');
+    setTimeout(function() { modal.hidden = true; }, 220);
+}
+
+function initProviderModal() {
+    var trigger = document.getElementById('providerPickerBtn');
+    if (trigger) trigger.addEventListener('click', openProviderModal);
+    document.querySelectorAll('[data-provider-close]').forEach(function(el) {
+        el.addEventListener('click', closeProviderModal);
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeProviderModal();
+    });
 }
 
 function updateScanButtonState() {
@@ -642,7 +686,7 @@ function startScan() {
     if (isScanning) return;
     if (!provider) {
         updateProviderHint('Sila pilih provider dulu sebelum mula scan.', true);
-        if (providerSection) providerSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        openProviderModal();
         return;
     }
     isScanning = true;

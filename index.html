@@ -162,19 +162,35 @@
         <section id="deviceIntel" class="device-intel" hidden></section>
     </div>
 
-    <!-- Provider Grid -->
-    <section class="provider-section" id="providerSection" data-aos="fade-up">
-        <div class="section-heading-wrap">
-            <h2 class="section-title">
-                <span class="section-icon">🔥</span>
-                ALL PROVIDER
-            </h2>
-            <p class="section-subtitle">Recommended provider dekat atas. Kalau nak lebih banyak pilihan, pilih mana-mana provider dekat sini sebelum mula scan.</p>
-        </div>
-        <div id="providerGrid" class="provider-grid">
-            <!-- Populated dynamically by JS from 99laju.net data -->
-        </div>
+    <!-- Provider Picker Trigger -->
+    <section class="provider-trigger-section" data-aos="fade-up">
+        <button type="button" id="providerPickerBtn" class="provider-picker-btn" aria-haspopup="dialog" aria-controls="providerSection">
+            <span class="provider-picker-icon" aria-hidden="true">🎰</span>
+            <span class="provider-picker-body">
+                <span class="provider-picker-label">Pilih Provider</span>
+                <span class="provider-picker-value" id="providerPickerValue">Tap untuk pilih provider casino</span>
+            </span>
+            <span class="provider-picker-chevron" aria-hidden="true">›</span>
+        </button>
         <p id="providerHint" class="provider-hint">Sila pilih provider dulu, lepas tu tekan SCAN untuk mula scan.</p>
+    </section>
+
+    <!-- Provider Grid Modal -->
+    <section class="provider-section provider-modal" id="providerSection" role="dialog" aria-modal="true" aria-labelledby="providerModalTitle" hidden>
+        <div class="provider-modal-backdrop" data-provider-close></div>
+        <div class="provider-modal-card">
+            <div class="section-heading-wrap provider-modal-head">
+                <h2 class="section-title" id="providerModalTitle">
+                    <span class="section-icon">🔥</span>
+                    ALL PROVIDER
+                </h2>
+                <button type="button" class="provider-modal-close" aria-label="Tutup" data-provider-close>✕</button>
+            </div>
+            <p class="section-subtitle">Pilih satu provider untuk mula scan RTP.</p>
+            <div id="providerGrid" class="provider-grid">
+                <!-- Populated dynamically by JS from 99laju.net data -->
+            </div>
+        </div>
     </section>
 
     <!-- Scanning Section (Clean Progress) -->
