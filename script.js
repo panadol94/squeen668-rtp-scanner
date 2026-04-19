@@ -251,7 +251,7 @@ function buildProviderGrid() {
         var btn = document.createElement('button');
         btn.className = 'provider-card' + (currentProvider === key ? ' active' : '');
         btn.setAttribute('data-provider', key);
-        btn.innerHTML = '<div class="provider-icon"><img loading="lazy" src="' + p.logo + '" alt="' + p.name + '" onerror="this.onerror=null; this.src=window.getFallbackImage(\'' + p.name + '\')"></div><span class="provider-name">' + p.name + '</span><span class="provider-check">✓</span>';
+        btn.innerHTML = '<div class="provider-icon"><img loading="lazy" src="' + escapeHtml(p.logo) + '" alt="' + escapeHtml(p.name) + '" onerror="this.onerror=null; this.src=window.getFallbackImage(this.alt)"></div><span class="provider-name">' + escapeHtml(p.name) + '</span><span class="provider-check">✓</span>';
         btn.addEventListener('click', function() {
             selectProvider(key);
         });
@@ -269,7 +269,7 @@ function buildFeaturedProviders() {
         var btn = document.createElement('button');
         btn.className = 'featured-provider-card' + (currentProvider === key ? ' active' : '');
         btn.setAttribute('data-provider', key);
-        btn.innerHTML = '<div class="featured-provider-thumb"><img loading="lazy" src="' + p.logo + '" alt="' + p.name + '" onerror="this.onerror=null; this.src=window.getFallbackImage(\'' + p.name + '\')"></div><span class="featured-provider-name">' + p.name + '</span>';
+        btn.innerHTML = '<div class="featured-provider-thumb"><img loading="lazy" src="' + escapeHtml(p.logo) + '" alt="' + escapeHtml(p.name) + '" onerror="this.onerror=null; this.src=window.getFallbackImage(this.alt)"></div><span class="featured-provider-name">' + escapeHtml(p.name) + '</span>';
         btn.addEventListener('click', function() {
             selectProvider(key);
         });
@@ -805,7 +805,7 @@ function renderTop3() {
     var medals = ['👑', '🥈', '🥉'], classes = ['gold', 'silver', 'bronze'];
     var html = '<h3 class="top3-heading">🏆 Top 3 Game Terpanas</h3><div class="top3-cards">';
     top3.forEach(function(game, i) {
-        html += '<div class="top3-card top3-' + classes[i] + '" style="animation-delay:' + (i * 0.15) + 's"><span class="top3-medal">' + medals[i] + '</span><div class="top3-thumb"><img loading="lazy" src="' + game.img + '" alt="' + game.name + '" onerror="this.onerror=null; this.src=window.getFallbackImage(this.alt)"></div><span class="top3-name">' + game.name + '</span>' + createRtpGauge(game.rtp, 50) + '<span class="top3-status top3-status-' + game.status + '">' + getStatusLabel(game.status) + '</span></div>';
+        html += '<div class="top3-card top3-' + classes[i] + '" style="animation-delay:' + (i * 0.15) + 's"><span class="top3-medal">' + medals[i] + '</span><div class="top3-thumb"><img loading="lazy" src="' + escapeHtml(game.img) + '" alt="' + escapeHtml(game.name) + '" onerror="this.onerror=null; this.src=window.getFallbackImage(this.alt)"></div><span class="top3-name">' + escapeHtml(game.name) + '</span>' + createRtpGauge(game.rtp, 50) + '<span class="top3-status top3-status-' + game.status + '">' + escapeHtml(getStatusLabel(game.status)) + '</span></div>';
     });
     section.innerHTML = html + '</div>';
 }
@@ -849,7 +849,7 @@ function renderGames() {
         card.className = 'game-card ' + game.status;
         card.style.animationDelay = (index * 0.04) + 's';
         var rankNum = currentFilter === 'all' ? index + 4 : index + 1;
-        card.innerHTML = '<div class="game-rank">#' + rankNum + '</div><div class="game-thumb"><img loading="lazy" src="' + game.img + '" alt="' + game.name + '" onerror="this.onerror=null; this.src=window.getFallbackImage(this.alt)"></div><div class="game-info"><div class="game-name">' + game.name + '</div><div class="game-provider-name">' + game.provider + '</div><div class="game-rtp-bar"><div class="game-rtp-fill ' + game.status + '" style="width:0%"></div></div></div><div class="game-rtp-value">' + createRtpGauge(game.rtp, 48) + '<span class="rtp-label ' + game.status + '">' + getStatusEmoji(game.status) + ' ' + game.status.toUpperCase() + '</span></div>';
+        card.innerHTML = '<div class="game-rank">#' + rankNum + '</div><div class="game-thumb"><img loading="lazy" src="' + escapeHtml(game.img) + '" alt="' + escapeHtml(game.name) + '" onerror="this.onerror=null; this.src=window.getFallbackImage(this.alt)"></div><div class="game-info"><div class="game-name">' + escapeHtml(game.name) + '</div><div class="game-provider-name">' + escapeHtml(game.provider) + '</div><div class="game-rtp-bar"><div class="game-rtp-fill ' + game.status + '" style="width:0%"></div></div></div><div class="game-rtp-value">' + createRtpGauge(game.rtp, 48) + '<span class="rtp-label ' + game.status + '">' + getStatusEmoji(game.status) + ' ' + escapeHtml(game.status.toUpperCase()) + '</span></div>';
         gameList.appendChild(card);
         setTimeout(function() { var fill = card.querySelector('.game-rtp-fill'); if (fill) fill.style.width = Math.max(0, Math.min(100, ((game.rtp - 25) / 75) * 100)) + '%'; }, 100 + index * 60);
     });
