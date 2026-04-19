@@ -2311,10 +2311,63 @@ body.scan-modal-open { overflow: hidden; }
 }
 
 .center-hack-btn.disabled .hack-btn-inner {
-    background: rgba(240, 181, 72, 0.35);
-    box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.18);
+    background: rgba(149, 6, 6, 0.35);
+    box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.15);
     cursor: not-allowed;
     animation: none;
+}
+
+/* Spinning rings around the SCAN disc — radar vibe */
+.center-hack-btn .hack-btn-inner::before,
+.center-hack-btn .hack-btn-inner::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+
+.center-hack-btn .hack-btn-inner::before {
+    inset: -7px;
+    border: 2px dashed var(--brand-red);
+    opacity: 0.75;
+    animation: spinRingCW 6s linear infinite;
+}
+
+.center-hack-btn .hack-btn-inner::after {
+    inset: -13px;
+    border: 1px solid transparent;
+    border-top-color: var(--brand-red);
+    border-right-color: rgba(149, 6, 6, 0.45);
+    animation: spinRingCCW 3.5s linear infinite;
+}
+
+.center-hack-btn.disabled .hack-btn-inner::before,
+.center-hack-btn.disabled .hack-btn-inner::after {
+    border-color: rgba(19, 27, 32, 0.18);
+    border-top-color: rgba(19, 27, 32, 0.28);
+    border-right-color: rgba(19, 27, 32, 0.18);
+    animation-duration: 12s;
+    opacity: 0.55;
+}
+
+body.scanning-active .center-hack-btn .hack-btn-inner::before {
+    animation-duration: 1.4s;
+    opacity: 1;
+}
+body.scanning-active .center-hack-btn .hack-btn-inner::after {
+    animation-duration: 0.9s;
+    border-top-color: #fff;
+    border-right-color: var(--brand-red-light);
+}
+
+@keyframes spinRingCW {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+@keyframes spinRingCCW {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(-360deg); }
 }
 
 .center-hack-btn > #scanButtonLabel {
@@ -2323,14 +2376,14 @@ body.scan-modal-open { overflow: hidden; }
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--accent-light);
+    color: var(--brand-red);
     text-shadow: none;
     max-width: none;
-    margin-top: 2px;
+    margin-top: 6px;
 }
 
 .center-hack-btn.disabled > #scanButtonLabel {
-    color: var(--text-dim);
+    color: var(--ink-muted);
 }
 
 /* =============================================================

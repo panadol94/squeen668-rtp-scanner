@@ -706,6 +706,7 @@ function startScan() {
         return;
     }
     isScanning = true;
+    document.body.classList.add('scanning-active');
     setFlowStep('scan');
     var scanBtn = document.getElementById('scanButton');
     if (scanBtn) {
@@ -736,6 +737,7 @@ function startScan() {
             scanSection.style.display = 'none';
             resultsSection.style.display = 'block';
             isScanning = false;
+            document.body.classList.remove('scanning-active');
             loadGames(currentProvider);
             updateBottomNavVisibility();
             setFlowStep('result');
