@@ -47,6 +47,8 @@ var isScanning = false;
 var currentDeviceIntel = null;
 var scanModalTimer = null;
 var currentRtpChart = null;
+var providerLogoWarmCache = [];
+var providerLogosWarmed = false;
 
 // ==========================================
 // FLOW STEPPER
@@ -120,6 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePickerTrigger();
     buildProviderGrid();
     buildFeaturedProviders();
+    warmProviderLogos();
     initFilterTabs();
     initSortSelect();
     initBottomNav();
@@ -251,7 +254,7 @@ function buildProviderGrid() {
         var btn = document.createElement('button');
         btn.className = 'provider-card' + (currentProvider === key ? ' active' : '');
         btn.setAttribute('data-provider', key);
-        btn.innerHTML = '<div class="provider-icon"><img loading="lazy" src="' + escapeHtml(p.logo) + '" alt="' + escapeHtml(p.name) + '" onerror="this.onerror=null; this.src=window.getFallbackImage(this.alt)"></div><span class="provider-name">' + escapeHtml(p.name) + '</span><span class="provider-check">✓</span>';
+        btn.innerHTML = '<div class="provider-icon"><img loading="eager" decoding="async" src="' + escapeHtml(p.logo) + '" alt="' + escapeHtml(p.name) + '" onerror="this.onerror=null; this.src=window.getFallbackImage(this.alt)"></div><span class="provider-name">' + escapeHtml(p.name) + '</span><span class="provider-check">✓</span>';
         btn.addEventListener('click', function() {
             selectProvider(key);
         });
@@ -269,12 +272,33 @@ function buildFeaturedProviders() {
         var btn = document.createElement('button');
         btn.className = 'featured-provider-card' + (currentProvider === key ? ' active' : '');
         btn.setAttribute('data-provider', key);
-        btn.innerHTML = '<div class="featured-provider-thumb"><img loading="lazy" src="' + escapeHtml(p.logo) + '" alt="' + escapeHtml(p.name) + '" onerror="this.onerror=null; this.src=window.getFallbackImage(this.alt)"></div><span class="featured-provider-name">' + escapeHtml(p.name) + '</span>';
+        btn.innerHTML = '<div class="featured-provider-thumb"><img loading="eager" decoding="async" src="' + escapeHtml(p.logo) + '" alt="' + escapeHtml(p.name) + '" onerror="this.onerror=null; this.src=window.getFallbackImage(this.alt)"></div><span class="featured-provider-name">' + escapeHtml(p.name) + '</span>';
         btn.addEventListener('click', function() {
             selectProvider(key);
         });
         grid.appendChild(btn);
     });
+}
+
+function warmProviderLogos() {
+    if (providerLogosWarmed) return;
+    providerLogosWarmed = true;
+    var preload = function() {
+        providerLogoWarmCache = [];
+        PROVIDER_ORDER.forEach(function(key) {
+            var provider = GAME_DATABASE[key];
+            if (!provider || !provider.logo) return;
+            var img = new Image();
+            img.decoding = 'async';
+            img.src = provider.logo;
+            providerLogoWarmCache.push(img);
+        });
+    };
+    if (typeof window.requestIdleCallback === 'function') {
+        window.requestIdleCallback(preload, { timeout: 1200 });
+    } else {
+        window.setTimeout(preload, 80);
+    }
 }
 
 function selectProvider(key) {

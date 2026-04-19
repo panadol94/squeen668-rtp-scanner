@@ -3,7 +3,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "pp": {
     "name": "PRAGMATIC PLAY",
     "code": "PP",
-    "logo": "https://storage.googleapis.com/99laju-images.imbaweb.com/game-provider/2x1/SL/PP.png",
+    "logo": "assets/provider-logos/pp.webp",
     "games": [
       {
         "name": "3 Buzzing Wilds",
@@ -2238,7 +2238,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "pz": {
     "name": "PLAYTECH",
     "code": "PZ",
-    "logo": "https://storage.googleapis.com/99laju-images.imbaweb.com/game-provider/2x1/SL/PZ.png",
+    "logo": "assets/provider-logos/pz.webp",
     "games": [
       {
         "name": "1-Of-A-Kind",
@@ -3953,7 +3953,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "jkr": {
     "name": "JOKER",
     "code": "JKR",
-    "logo": "https://storage.googleapis.com/99laju-images.imbaweb.com/game-provider/2x1/SL/JKR.png",
+    "logo": "assets/provider-logos/jkr.webp",
     "games": [
       {
         "name": "Aladdin",
@@ -4728,7 +4728,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "ag": {
     "name": "ASIA GAMING",
     "code": "AG",
-    "logo": "https://storage.googleapis.com/99laju-images.imbaweb.com/game-provider/2x1/SL/AG.png",
+    "logo": "assets/provider-logos/ag.webp",
     "games": [
       {
         "name": "Ace Heist",
@@ -5111,7 +5111,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "cq9": {
     "name": "CQ9",
     "code": "CQ9",
-    "logo": "https://storage.googleapis.com/99laju-images.imbaweb.com/game-provider/2x1/SL/CQ9.png",
+    "logo": "assets/provider-logos/cq9.webp",
     "games": [
       {
         "name": "3 2 1Go!",
@@ -5926,7 +5926,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "ep": {
     "name": "EVOPLAY",
     "code": "EP",
-    "logo": "https://storage.googleapis.com/99laju-images.imbaweb.com/game-provider/2x1/SL/EP.png",
+    "logo": "assets/provider-logos/ep.webp",
     "games": [
       {
         "name": "Ace Round",
@@ -6741,7 +6741,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "fc": {
     "name": "FACHAI",
     "code": "FC",
-    "logo": "https://storage.googleapis.com/99laju-images.imbaweb.com/game-provider/2x1/SL/FC.png",
+    "logo": "assets/provider-logos/fc.webp",
     "games": [
       {
         "name": "ANIMAL RACING",
@@ -6960,7 +6960,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "gp": {
     "name": "GAME PLAY",
     "code": "GP",
-    "logo": "https://storage.googleapis.com/99laju-images.imbaweb.com/game-provider/2x1/SL/GP.png",
+    "logo": "assets/provider-logos/gp.webp",
     "games": [
       {
         "name": "4 Guardians",
@@ -7555,7 +7555,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "jdb": {
     "name": "JDB",
     "code": "JDB",
-    "logo": "https://storage.googleapis.com/99laju-images.imbaweb.com/game-provider/2x1/SL/JDB.png",
+    "logo": "assets/provider-logos/jdb.webp",
     "games": [
       {
         "name": "Aviator Extra Bet",
@@ -7782,7 +7782,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "je": {
     "name": "JILI",
     "code": "JE",
-    "logo": "https://storage.googleapis.com/99laju-images.imbaweb.com/game-provider/2x1/SL/JE.png",
+    "logo": "assets/provider-logos/je.webp",
     "games": [
       {
         "name": "3 Coin Treasures",
@@ -8197,7 +8197,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "li_22": {
     "name": "LIVE22",
     "code": "LI_22",
-    "logo": "https://storage.googleapis.com/99laju-images.imbaweb.com/game-provider/2x1/SL/LI_22.png",
+    "logo": "assets/provider-logos/li_22.webp",
     "games": [
       {
         "name": "Advent of the Dragon",
@@ -8396,7 +8396,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "nextspin": {
     "name": "NEXTSPIN",
     "code": "NEXTSPIN",
-    "logo": "https://storage.googleapis.com/99laju-images.imbaweb.com/game-provider/2x1/SL/NEXTSPIN.png",
+    "logo": "assets/provider-logos/nextspin.webp",
     "games": [
       {
         "name": "5 Fortune Stars",
@@ -8623,7 +8623,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "sg": {
     "name": "SPADE GAMING",
     "code": "SG",
-    "logo": "https://storage.googleapis.com/99laju-images.imbaweb.com/game-provider/2x1/SL/SG.png",
+    "logo": "assets/provider-logos/sg.webp",
     "games": [
       {
         "name": "168 Fortunes",
@@ -9154,7 +9154,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "m8": {
     "name": "MEGA888",
     "code": "M8",
-    "logo": "assets/mega.png",
+    "logo": "assets/provider-logos/m8.webp",
     "games": [
       {
         "name": "AppleMachineIcon0.png",
@@ -11257,7 +11257,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "k918": {
     "name": "918KISS",
     "code": "K918",
-    "logo": "assets/kissh5.png",
+    "logo": "assets/provider-logos/k918.webp",
     "games": [
       {
         "name": "AztecIcon0.png",
@@ -12200,7 +12200,7 @@ window.SQUEEN668_GAME_DATABASE = {
   "pussy888": {
     "name": "Pussy888",
     "code": "PUSSY888",
-    "logo": "assets/pussy888-logo.png",
+    "logo": "assets/provider-logos/pussy888.webp",
     "games": [
       {
         "name": "santasurprise",
