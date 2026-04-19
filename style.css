@@ -5075,3 +5075,31 @@ body > nav.bottom-nav {
         top: -4px !important;
     }
 }
+
+/* =============================================
+   EMERGENCY MOBILE NAV WIDTH OVERRIDE
+   ============================================= */
+html body .page-shell .bottom-nav,
+body > .bottom-nav {
+    left: 4px !important;
+    right: 4px !important;
+    width: calc(100% - 8px) !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 6px 2px !important;
+}
+html body .page-shell .bottom-nav > .nav-item,
+body > .bottom-nav > .nav-item {
+    flex: 1 1 20% !important;
+    min-width: 0 !important;
+    max-width: 20% !important;
+    padding: 4px 1px !important;
+}
+html body .page-shell .bottom-nav > .nav-item span,
+body > .bottom-nav > .nav-item span {
+    font-size: 6px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 98% !important;
+}
