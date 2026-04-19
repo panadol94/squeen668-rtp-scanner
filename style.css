@@ -3867,3 +3867,190 @@ select:focus-visible,
     0%   { transform: scale(1.08); color: #22c55e; }
     100% { transform: scale(1); color: var(--brand-red); }
 }
+
+/* =============================================
+   TRUSTED COMPANIES SECTION
+   ============================================= */
+.trusted-section {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-md);
+}
+
+.trusted-section .section-heading-wrap {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
+
+.trusted-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.trusted-stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: var(--space-md);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.trusted-stat-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-glow);
+    transform: translateY(-2px);
+}
+
+.trusted-stat-value {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+}
+
+.trusted-suffix {
+    font-size: 0.6em;
+    color: var(--accent-light);
+}
+
+.trusted-stat-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 6px;
+}
+
+.trusted-company-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-md);
+}
+
+.trusted-company-card {
+    display: block;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: var(--space-md);
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.trusted-company-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(240, 181, 72, 0.05), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.trusted-company-card:hover {
+    border-color: var(--border-glow);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-elevated);
+}
+
+.trusted-company-card:hover::before {
+    opacity: 1;
+}
+
+.trusted-company-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: linear-gradient(135deg, #FF4D4D, #DC2626);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+}
+
+.trusted-company-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 6px;
+}
+
+.trusted-company-caption {
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 12px;
+}
+
+.trusted-company-action {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    transition: color 0.3s ease;
+}
+
+.trusted-company-card:hover .trusted-company-action {
+    color: var(--accent);
+}
+
+.trusted-disclaimer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border-subtle);
+}
+
+.trusted-disclaimer a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.trusted-disclaimer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .trusted-stats-row {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-sm);
+    }
+    
+    .trusted-stat-card {
+        padding: var(--space-sm);
+    }
+    
+    .trusted-company-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =============================================
+   MAX-WIDTH CONTAINER FIX
+   ============================================= */
+@media (max-width: 480px) {
+    .page-shell,
+    body {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+    }
+    
+    .bottom-nav {
+        max-width: calc(100vw - 4px) !important;
+        box-sizing: border-box !important;
+    }
+    
+    .bottom-nav > a.nav-item {
+        max-width: 20% !important;
+        box-sizing: border-box !important;
+    }
+}
