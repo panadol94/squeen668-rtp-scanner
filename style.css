@@ -5194,7 +5194,7 @@ body.provider-modal-open {
     display: flex;
 }
 
-.provider-modal .provider-name {
+.provider-modal .provider-card .provider-name {
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.04em;
