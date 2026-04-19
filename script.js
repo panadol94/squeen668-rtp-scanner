@@ -115,6 +115,8 @@ function renderGamesEmpty(message) {
 // ==========================================
 document.addEventListener('DOMContentLoaded', function() {
     setFlowStep('provider');
+    initProviderModal();
+    updatePickerTrigger();
     buildProviderGrid();
     buildFeaturedProviders();
     initFilterTabs();
@@ -279,7 +281,49 @@ function selectProvider(key) {
     setFlowStep('provider');
     updateScanButtonState();
     updateProviderHint();
+    updatePickerTrigger();
     updateBottomNavVisibility();
+    closeProviderModal();
+}
+
+function updatePickerTrigger() {
+    var trigger = document.getElementById('providerPickerBtn');
+    var value = document.getElementById('providerPickerValue');
+    var provider = GAME_DATABASE[currentProvider];
+    if (value) {
+        value.textContent = provider ? provider.name : 'Tap untuk pilih provider casino';
+    }
+    if (trigger) {
+        trigger.classList.toggle('is-selected', !!provider);
+    }
+}
+
+function openProviderModal() {
+    var modal = document.getElementById('providerSection');
+    if (!modal) return;
+    modal.hidden = false;
+    void modal.offsetWidth;
+    modal.classList.add('is-open');
+    document.body.classList.add('provider-modal-open');
+}
+
+function closeProviderModal() {
+    var modal = document.getElementById('providerSection');
+    if (!modal || modal.hidden) return;
+    modal.classList.remove('is-open');
+    document.body.classList.remove('provider-modal-open');
+    setTimeout(function() { modal.hidden = true; }, 220);
+}
+
+function initProviderModal() {
+    var trigger = document.getElementById('providerPickerBtn');
+    if (trigger) trigger.addEventListener('click', openProviderModal);
+    document.querySelectorAll('[data-provider-close]').forEach(function(el) {
+        el.addEventListener('click', closeProviderModal);
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeProviderModal();
+    });
 }
 
 function updateScanButtonState() {
@@ -300,25 +344,16 @@ function updateScanButtonState() {
 
 function updateProviderHint(message, isError) {
     var hint = document.getElementById('providerHint');
-    var missionTitle = document.getElementById('scanMissionTitle');
-    var missionText = document.getElementById('scanMissionText');
-    var missionProgress = document.getElementById('scanMissionProgress');
     var provider = GAME_DATABASE[currentProvider];
     if (!hint) return;
     hint.classList.toggle('error', !!isError);
     if (message) {
         hint.textContent = message;
-        if (missionText) missionText.textContent = message;
         return;
     }
     hint.textContent = provider
         ? 'Provider dipilih: ' + provider.name + '. Tekan SCAN untuk mula scan.'
         : 'Sila pilih provider dulu, lepas tu tekan SCAN untuk mula scan.';
-    if (missionTitle) missionTitle.textContent = provider ? 'Scan ' + provider.name + ' sekarang' : 'Pilih provider untuk mula scan';
-    if (missionText) missionText.textContent = provider
-        ? provider.name + ' dah ready. Tekan Scan atau button bawah untuk teruskan.'
-        : 'Pilih provider dekat Recommended Provider atau All Provider, lepas tu tekan Scan.';
-    if (missionProgress) missionProgress.style.width = provider ? '100%' : '36%';
 }
 
 function escapeHtml(value) {
@@ -553,6 +588,22 @@ function openScanModalSweet(providerName, onDone) {
 function getStatusLabel(s) { return s === 'hot' ? '🔥 HOT' : s === 'warm' ? '⚡ WARM' : '❄️ COLD'; }
 function getStatusEmoji(s) { return s === 'hot' ? '🔥' : s === 'warm' ? '⚡' : '❄️'; }
 
+function formatGameName(raw) {
+    if (!raw) return '';
+    var name = String(raw);
+    name = name.replace(/\.(png|jpe?g|webp|gif)$/i, '');
+    name = name.replace(/Icon\d*$/i, '');
+    name = name.replace(/_\d+$/, '');
+    name = name.replace(/([A-Za-z])[01]$/, '$1');
+    name = name.replace(/[_\-]+/g, ' ');
+    name = name.replace(/([a-z])([A-Z])/g, '$1 $2');
+    name = name.replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2');
+    name = name.replace(/([a-zA-Z])(\d)/g, '$1 $2').replace(/(\d)([a-zA-Z])/g, '$1 $2');
+    name = name.replace(/\s+/g, ' ').trim();
+    name = name.replace(/\b([a-z])/g, function(_, ch) { return ch.toUpperCase(); });
+    return name || raw;
+}
+
 window.getFallbackImage = function(gameName) {
     if (!gameName) gameName = "GAME";
     var words = gameName.split(' ');
@@ -635,11 +686,18 @@ function startScan() {
     if (isScanning) return;
     if (!provider) {
         updateProviderHint('Sila pilih provider dulu sebelum mula scan.', true);
-        if (providerSection) providerSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        openProviderModal();
         return;
     }
     isScanning = true;
     setFlowStep('scan');
+    var scanBtn = document.getElementById('scanButton');
+    if (scanBtn) {
+        scanBtn.classList.remove('popping');
+        void scanBtn.offsetWidth;
+        scanBtn.classList.add('popping');
+        setTimeout(function() { scanBtn.classList.remove('popping'); }, 750);
+    }
     updateProviderHint();
     var scanSection = document.getElementById('scanningSection');
     var resultsSection = document.getElementById('resultsSection');
@@ -673,10 +731,14 @@ function startScan() {
 // ==========================================
 // GENERATE RTP (time-seeded)
 // ==========================================
+function isNonSlotGame(rawName) {
+    return /roulette|fish|fishin|baccarat|blackjack|sic ?bo|poker|hi ?lo|dragon ?tiger|niu ?niu|bull ?bull/i.test(String(rawName || ''));
+}
+
 function generateResults(providerKey) {
     var provider = GAME_DATABASE[providerKey];
     if (!provider) return [];
-    var allGames = provider.games;
+    var allGames = provider.games.filter(function(g) { return !isNonSlotGame(g.name); });
     var seed = getTimeSeed(providerKey, SCANNER_CONFIG.seedInterval);
     var rand = seededRandom(seed);
     var cfg = SCANNER_CONFIG;
@@ -688,7 +750,7 @@ function generateResults(providerKey) {
         if (tierRoll < cfg.hotPercent) { rtp = Math.floor(gameRand() * (cfg.maxRtp - cfg.hotThreshold + 1) + cfg.hotThreshold); status = 'hot'; }
         else if (tierRoll < cfg.hotPercent + cfg.warmPercent) { rtp = Math.floor(gameRand() * (cfg.hotThreshold - cfg.warmThreshold) + cfg.warmThreshold); status = 'warm'; }
         else { rtp = Math.floor(gameRand() * (cfg.warmThreshold - cfg.minRtp) + cfg.minRtp); status = 'cold'; }
-        return { name: g.name, img: g.img, provider: provider.name, rtp: rtp, status: status };
+        return { name: formatGameName(g.name), img: g.img, provider: provider.name, rtp: rtp, status: status };
     }).sort(function(a, b) { return b.rtp - a.rtp; });
 }
 
@@ -747,19 +809,10 @@ function animateCounter(id, target) {
     var el = document.getElementById(id); if (!el) return;
     var cur = parseInt(el.textContent) || 0; if (cur === target) return;
     var step = target > cur ? 1 : -1;
-    var card = el.closest('.stat-card, .hero-stat-card');
     var t = setInterval(function() {
         cur += step;
         el.textContent = cur;
-        if (cur === target) {
-            clearInterval(t);
-            if (card) {
-                card.classList.remove('flash');
-                void card.offsetWidth;
-                card.classList.add('flash');
-                setTimeout(function() { card.classList.remove('flash'); }, 700);
-            }
-        }
+        if (cur === target) clearInterval(t);
     }, 50);
 }
 
