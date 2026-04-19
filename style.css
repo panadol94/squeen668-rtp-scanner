@@ -159,7 +159,7 @@ body {
     position: relative;
     width: 28px;
     height: 28px;
-    border-radius: 7px;
+    border-radius: 8px;
     display: grid;
     place-items: center;
     font-family: var(--font-display);
@@ -167,15 +167,15 @@ body {
     color: #fff;
     overflow: visible;
     isolation: isolate;
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 244, 236, 0.16);
     background:
-        radial-gradient(circle at 30% 24%, rgba(255, 216, 170, 0.36) 0%, rgba(255, 216, 170, 0) 28%),
-        linear-gradient(145deg, #cf2323 0%, #8f0909 52%, #520303 100%);
+        radial-gradient(circle at 28% 20%, rgba(255, 226, 178, 0.36) 0%, rgba(255, 226, 178, 0) 30%),
+        linear-gradient(155deg, #d93131 0%, #991014 46%, #560508 100%);
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.16),
-        inset 0 -4px 8px rgba(30, 0, 0, 0.32),
-        0 4px 10px rgba(88, 3, 3, 0.28),
-        0 0 12px rgba(255, 146, 84, 0.18);
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        inset 0 -5px 8px rgba(35, 1, 5, 0.40),
+        0 4px 10px rgba(15, 1, 3, 0.34),
+        0 6px 18px rgba(84, 9, 9, 0.20);
     padding: 3px;
 }
 
@@ -183,8 +183,10 @@ body {
     content: '';
     position: absolute;
     inset: 1px;
-    border-radius: 6px;
-    background: linear-gradient(155deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.08) 20%, rgba(255, 255, 255, 0) 44%, rgba(255, 180, 92, 0.10) 100%);
+    border-radius: 7px;
+    background:
+        linear-gradient(152deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.08) 20%, rgba(255, 255, 255, 0) 45%),
+        linear-gradient(330deg, rgba(255, 187, 109, 0.11) 0%, rgba(255, 187, 109, 0) 42%);
     pointer-events: none;
     z-index: 0;
 }
@@ -193,15 +195,15 @@ body {
     content: '';
     position: absolute;
     inset: -3px;
-    border-radius: 9px;
+    border-radius: 10px;
     border: 1px solid transparent;
-    border-top-color: rgba(255, 225, 182, 0.95);
-    border-right-color: rgba(255, 167, 67, 0.72);
-    box-shadow: 0 0 10px rgba(255, 179, 71, 0.16);
+    border-top-color: rgba(255, 227, 189, 0.88);
+    border-right-color: rgba(255, 169, 86, 0.58);
+    box-shadow: 0 0 8px rgba(255, 184, 98, 0.12);
     pointer-events: none;
     z-index: 3;
-    transform: rotate(-16deg);
-    animation: brandReticleSweep 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    transform: rotate(-18deg);
+    animation: brandReticleSweep 5.4s ease-in-out infinite;
 }
 
 .brand-chip {
@@ -209,34 +211,97 @@ body {
     z-index: 2;
     width: 100%;
     height: 100%;
-    stroke: rgba(255, 250, 245, 0.95);
-    stroke-width: 1.35;
+    stroke: rgba(249, 246, 241, 0.94);
+    stroke-width: 1.25;
     stroke-linecap: round;
+    stroke-linejoin: round;
     fill: none;
     overflow: visible;
-    filter: drop-shadow(0 1px 1px rgba(45, 0, 0, 0.18)) drop-shadow(0 0 6px rgba(255, 163, 82, 0.14));
+    filter: drop-shadow(0 1px 1px rgba(45, 0, 0, 0.16));
 }
+
+.brand-chip .chip-reticle-base {
+    stroke: rgba(255, 241, 225, 0.22);
+    stroke-width: 0.9;
+    stroke-dasharray: 2.4 3.8;
+}
+
+.brand-chip .chip-reticle-arc {
+    stroke: rgba(255, 218, 173, 0.78);
+    stroke-width: 1.1;
+    filter: drop-shadow(0 0 3px rgba(255, 180, 96, 0.14));
+}
+
+.brand-chip .chip-reticle-arc-secondary {
+    stroke-width: 0.95;
+    opacity: 0.58;
+}
+
+.brand-chip .chip-reticle-tick {
+    stroke: rgba(255, 244, 234, 0.56);
+    stroke-width: 0.9;
+}
+
 .brand-chip .chip-body {
-    fill: rgba(255, 255, 255, 0.10);
-    stroke: rgba(255, 255, 255, 0.96);
+    fill: rgba(255, 255, 255, 0.08);
+    stroke: rgba(255, 255, 255, 0.94);
 }
+
+.brand-chip .chip-frame {
+    fill: rgba(255, 255, 255, 0.04);
+    stroke: rgba(255, 231, 208, 0.62);
+    stroke-width: 0.85;
+}
+
+.brand-chip .chip-pin {
+    stroke: rgba(255, 250, 245, 0.92);
+}
+
+.brand-chip .chip-core-ring {
+    fill: rgba(255, 139, 59, 0.08);
+    stroke: rgba(255, 205, 144, 0.50);
+    stroke-width: 0.82;
+    transform-origin: center;
+    animation: brandCoreHalo 5.2s ease-in-out infinite;
+}
+
 .brand-chip .chip-core {
-    fill: #ffe5bf;
+    fill: #ffb873;
     stroke: none;
     transform-origin: center;
-    filter: drop-shadow(0 0 5px rgba(255, 193, 107, 0.55));
-    animation: brandChipPulse 1.9s ease-in-out infinite;
+    filter: drop-shadow(0 0 4px rgba(255, 177, 98, 0.30));
+    animation: brandChipPulse 2.8s ease-in-out infinite;
 }
+
+.brand-chip .chip-scan-sweep {
+    stroke: rgba(255, 241, 222, 0.74);
+    stroke-width: 0.82;
+    stroke-dasharray: 1.2 3.6;
+    opacity: 0.42;
+    animation: brandScanSweep 5.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
 @keyframes brandChipPulse {
-    0%, 100% { opacity: 0.82; transform: scale(0.82); }
-    45%      { opacity: 1; transform: scale(1.10); }
-    60%      { opacity: 0.92; transform: scale(0.96); }
+    0%, 100% { opacity: 0.84; transform: scale(0.92); }
+    48%      { opacity: 1; transform: scale(1.03); }
+    62%      { opacity: 0.92; transform: scale(0.98); }
+}
+
+@keyframes brandCoreHalo {
+    0%, 100% { opacity: 0.36; transform: scale(0.96); }
+    50%      { opacity: 0.70; transform: scale(1.04); }
+}
+
+@keyframes brandScanSweep {
+    0%, 100% { opacity: 0.22; stroke-dashoffset: 0; }
+    45%      { opacity: 0.58; stroke-dashoffset: -3.4; }
+    68%      { opacity: 0.34; stroke-dashoffset: -4.1; }
 }
 
 @keyframes brandReticleSweep {
-    0%, 100% { transform: rotate(-16deg) scale(1); opacity: 0.72; }
-    35%      { transform: rotate(-2deg) scale(1.02); opacity: 1; }
-    65%      { transform: rotate(12deg) scale(1.04); opacity: 0.86; }
+    0%, 100% { transform: rotate(-18deg) scale(1); opacity: 0.70; }
+    45%      { transform: rotate(-8deg) scale(1.02); opacity: 0.94; }
+    70%      { transform: rotate(4deg) scale(1.03); opacity: 0.80; }
 }
 
 .brand-name {
